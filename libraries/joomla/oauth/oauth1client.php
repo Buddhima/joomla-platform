@@ -86,7 +86,7 @@ abstract class JOauth1Client extends JOauth1aClient
 	private function _generateRequestToken()
 	{
 		// Set the callback URL. tTODO: no call back should be setted - how request for Requst Token change?
-		if(isset($this->getOption('callback')))	
+		if(($this->getOption('callback'))!=null)	
 		{	
 			$parameters = array(
 				'oauth_callback' => $this->getOption('callback')
