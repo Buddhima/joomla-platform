@@ -18,7 +18,7 @@ jimport('joomla.environment.response');
  *
  * @since       12.2
  */
-abstract class JOauth1Client extends JOauth1aClient
+abstract class JOauthV1client extends JOauthV1aclient
 {
 	
 
