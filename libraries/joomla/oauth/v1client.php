@@ -31,7 +31,7 @@ abstract class JOauthV1client extends JOauthV1aclient
 	 *
 	 * @throws DomainException
 	 */
-	public function auth()
+	public function authenticate()
 	{
 		// Already got some credentials stored?
 		if ($this->token)
@@ -85,7 +85,7 @@ abstract class JOauthV1client extends JOauthV1aclient
 	 */
 	private function _generateRequestToken()
 	{
-		// Set the callback URL. tTODO: no call back should be setted - how request for Requst Token change?
+		// Set the callback URL. TODO: no call back should be setted - how request for Requst Token change?
 		if(($this->getOption('callback'))!=null)	
 		{	
 			$parameters = array(

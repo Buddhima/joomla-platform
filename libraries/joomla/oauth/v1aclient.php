@@ -69,7 +69,7 @@ abstract class JOauthV1aclient
 	 *
 	 * @throws DomainException
 	 */
-	public function auth()
+	public function authenticate()
 	{
 		// Already got some credentials stored?
 		if ($this->token)
@@ -141,7 +141,7 @@ abstract class JOauthV1aclient
 		$response = $this->oauthRequest($this->getOption('requestTokenURL'), 'POST', $parameters);
 
 		parse_str($response->body, $params);
-		if ($params['oauth_callback_confirmed'] == true)
+		if (!strcmp($params['oauth_callback_confirmed'], 'true'))
 		{
 			// Save the request token.
 			$this->token = array('key' => $params['oauth_token'], 'secret' => $params['oauth_token_secret']);
@@ -158,24 +158,6 @@ abstract class JOauthV1aclient
 	}
 
 	/**
-	 * Method used to authenticate the user.
-	 *
-	 * @return void
-	 *
-	 * @since  12.2
-	 */
-	private function _authenticate()
-	{
-		$url = $this->getOption('authenticateURL') . '?oauth_token=' . $this->token['key'];
-
-		if ($this->getOption('sendheaders'))
-		{
-			JResponse::setHeader('Location', $url, true);
-			JResponse::sendHeaders();
-		}
-	}
-
-	/**
 	 * Method used to authorise the application.
 	 *
 	 * @return void
@@ -185,6 +167,12 @@ abstract class JOauthV1aclient
 	private function _authorise()
 	{
 		$url = $this->getOption('authoriseURL') . '?oauth_token=' . $this->token['key'];
+
+		if ($this->getOption('scope'))
+		{
+			$scope = is_array($this->getOption('scope')) ? implode(' ', $this->getOption('scope')) : $this->getOption('scope');
+			$url .= '&scope=' . urlencode($scope);
+		}
 
 		if ($this->getOption('sendheaders'))
 		{
@@ -244,32 +232,22 @@ abstract class JOauthV1aclient
 
 		$parameters = array_merge($parameters, $defaults);
 
-		if (is_array($data))
+		// Do not encode multipart parameters.
+		if (isset($headers['Content-Type']) && strpos($headers['Content-Type'], 'multipart/form-data') !== false)
 		{
-			// Do not encode multipart parameters.
-			if (isset($headers['Content-Type']) && strpos($headers['Content-Type'], 'multipart/form-data') !== false)
-			{
-				$oauth_headers = $parameters;
-			}
-			else
-			{
-				// Use all parameters for the signature.
-				$oauth_headers = array_merge($parameters, $data);
-			}
-
-			// Sign the request.
-			$oauth_headers = $this->_signRequest($url, $method, $oauth_headers);
-
-			// Get parameters for the Authorisation header.
-			$oauth_headers = array_diff_key($oauth_headers, $data);
+			$oauth_headers = $parameters;
 		}
 		else
 		{
-			$oauth_headers = $parameters;
-
-			// Sign the request.
-			$oauth_headers = $this->_signRequest($url, $method, $oauth_headers);
+			// Use all parameters for the signature.
+			$oauth_headers = array_merge($parameters, $data);
 		}
+
+		// Sign the request.
+		$oauth_headers = $this->_signRequest($url, $method, $oauth_headers);
+
+		// Get parameters for the Authorisation header.
+		$oauth_headers = array_diff_key($oauth_headers, $data);
 
 		// Send the request.
 		switch ($method)
