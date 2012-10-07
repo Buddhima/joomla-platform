@@ -48,15 +48,20 @@ abstract class JOauthV1client extends JOauthV1aclient
 			}
 		}
 
-		
+		$verifier = $this->input->get('oauth_token');
+
+		if (empty($verifier))
+		{
 			// Generate a request token.
 			$this->_generateRequestToken();
 
 			// Authenticate the user and authorise the app.
 			$this->_authorise();
-		
+		}
+
 		// Callback
-		
+		else
+		{
 			$session = JFactory::getSession();
 
 			// Get token form session.
@@ -67,13 +72,13 @@ abstract class JOauthV1client extends JOauthV1aclient
 			{
 				throw new DomainException('Bad session!');
 			}
-
-		
+			
 			// Generate access token.
 			$this->_generateAccessToken();
 
 			// Return the access token.
-			return $this->token;		
+			return $this->token;
+		}	
 	}
 
 	/**
@@ -85,30 +90,22 @@ abstract class JOauthV1client extends JOauthV1aclient
 	 */
 	private function _generateRequestToken()
 	{
-		// Set the callback URL. TODO: no call back should be setted - how request for Requst Token change?
-		if(($this->getOption('callback'))!=null)	
-		{	
-			$parameters = array(
-				'oauth_callback' => $this->getOption('callback')
-			);
-		}
+		
+		$parameters = array();
 
 		// Make an OAuth request for the Request Token.
-		$response = $this->oauthRequest($this->getOption('requestTokenURL'), 'POST', $parameters); // TODO: parameter only has 'callback' why?
+		$response = $this->oauthRequest($this->getOption('requestTokenURL'), 'POST', $parameters);
 
 		parse_str($response->body, $params);
-		
-		// Save the request token.
-		$this->token = array('key' => $params['oauth_token'], 'secret' => $params['oauth_token_secret']);
+			// Save the request token.
+			$this->token = array('key' => $params['oauth_token'], 'secret' => $params['oauth_token_secret']);
 
-		// Save the request token in session
-		$session = JFactory::getSession();
-		$session->set('key', $this->token['key'], 'oauth_token');
-		$session->set('secret', $this->token['secret'], 'oauth_token');		
+			// Save the request token in session
+			$session = JFactory::getSession();
+			$session->set('key', $this->token['key'], 'oauth_token');
+			$session->set('secret', $this->token['secret'], 'oauth_token');
 	}
-
 	
-
 	/**
 	 * Method used to get an access token.
 	 *
@@ -120,19 +117,17 @@ abstract class JOauthV1client extends JOauthV1aclient
 	{
 		// Set the parameters.
 		$parameters = array(
-			'oauth_token' => $this->token['key']
+				'oauth_token' => $this->token['key']
 		);
-
+	
 		// Make an OAuth request for the Access Token.
 		$response = $this->oauthRequest($this->getOption('accessTokenURL'), 'POST', $parameters);
-
+	
 		parse_str($response->body, $params);
-
+	
 		// Save the access token.
 		$this->token = array('key' => $params['oauth_token'], 'secret' => $params['oauth_token_secret']);
 	}
-
 	
-
 	
 }
