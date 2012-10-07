@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die();
 jimport('joomla.environment.response');
 
 /**
- * Joomla Platform class for interacting with an OAuth 1.0a server.
+ * Joomla Platform class for interacting with an OAuth 1.0 server.
  *
  * @package     Joomla.Platform
  * @subpackage  OAuth
