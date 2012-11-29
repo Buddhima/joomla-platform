@@ -8,7 +8,6 @@
  */
 
 defined('JPATH_PLATFORM') or die();
-//jimport('joomla.oauth.client');
 
 /**
  * Joomla Platform class for generating Openstreetmap API access token.
@@ -44,7 +43,7 @@ class JOpenstreetmapOauth extends JOAuth1Client
 		$this->options->def('requestTokenURL', 'http://www.openstreetmap.org/oauth/request_token');
 
 		// Call the JOauthV1client constructor to setup the object.
-		parent::__construct('1.0',$this->options, $client, $input);
+		parent::__construct('1.0', $this->options, $client, $input);
 	}
 
 	/**

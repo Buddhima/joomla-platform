@@ -67,8 +67,7 @@ abstract class JOAuth1Client
 	 *
 	 * @since 12.3
 	 */
-	public function __construct(JRegistry $options = null, JHttp $client = null, JInput $input = null, JApplicationWeb $application = null,
-		$version = null)
+	public function __construct($version = null, JRegistry $options = null, JHttp $client = null, JInput $input = null, JApplicationWeb $application = null)
 	{
 		$this->options = isset($options) ? $options : new JRegistry;
 		$this->client = isset($client) ? $client : JHttpFactory::getHttp($this->options);
