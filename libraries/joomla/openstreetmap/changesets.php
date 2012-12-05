@@ -35,22 +35,21 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 				'oauth_token_secret'=>$token['secret']
 		);
 		
-		echo '<br/>';
-		print_r($token['secret']);
-		echo '<br/>';
+		
 		// Set the API base
 		$base = '/api/0.6/changeset/create' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
 		
-		$xml="<?xml version='1.0' encoding='UTF-8'?>"."<osm version='0.6' generator='JOpenstreetmap'>";
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">';
 		if(!empty($changesets))
 		{	
 			// Create Changeset element for every changeset		
 			foreach($changesets as $tags)
 			{
-				$xml.="<changeset id='1990' open='false'>";
+				$xml.='<changeset>';
 				$tag_list='';
 				if(!empty($tags))
 				{
@@ -68,15 +67,16 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		
 		$xml.='</osm>';
 		
-		echo htmlspecialchars($xml);
+// 		echo htmlspecialchars($xml);
+// 		echo '$#@FF#@#$<br/>';
 		
-	//	$header['Content-Type'] = 'text/xml';
+		$header['Content-Type'] = 'text/xml';
 		
 		// Send the request.
-	//	$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml);
+		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+// 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml);
 		
-		return $response;		
+		return $response->body;		
 		
 	}
 	
@@ -140,7 +140,8 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 			}
 		}
 		
-		$xml='<osm>
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">
   				<changeset>'
    				 .$tag_list.
   				'</changeset>  
@@ -244,7 +245,8 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 			}
 		}
 		
-		$xml='<osm>
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">
 				<changeset>'
 				.$node_list.
 				'</changeset>

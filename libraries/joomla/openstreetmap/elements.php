@@ -83,7 +83,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 			
 		}
 		
-		$xml='<osm>
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">
 				<node changeset="'.$changeset.'" lat="'.$latitude.'" lon="'.$longitude.'">'
 					.$tag_list.
 				'</node>
@@ -95,8 +96,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 		
-		//return $response;	
-		return "";	
+		return $response->body;	
+			
 	}
 	
 	
@@ -139,7 +140,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 			}		
 		}
 		
-		$xml='<osm>
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">
 				<way changeset="'.$changeset.'">'
 					.$tag_list
 					.$nd_list.
@@ -152,8 +154,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 		
-		//return $response;
-		return "";
+		return $response->body;
+		
 	}
 	
 	// create ways
@@ -201,7 +203,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		}
 		
 	
-		$xml='<osm>
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">
 				<relation relation="'.$changeset.'" >'
 					.$tag_list
 					.$member_list.
@@ -214,8 +217,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 	
-		//return $response;
-		return "";
+		return $response->body;
+		
 	}
 	
 	
@@ -281,7 +284,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
-		return $response;
+		return $response->body;
 
 	}
 
@@ -314,7 +317,8 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 		
 		//create xml
-		$xml='<osm>
+		$xml='<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="JOpenstreetmap">
 				<'.$element.' id="'.$id.'" version="'.$version.'" changeset="'.$changeset.'"';
 		
 		if(!empty($latitude)&&!empty($longitude))
@@ -328,7 +332,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'DELETE', $parameters, $xml, $header);
 
-		return $response;
+		return $response->body;
 	}
 
 	/**

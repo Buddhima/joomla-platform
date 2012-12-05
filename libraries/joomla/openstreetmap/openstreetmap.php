@@ -58,8 +58,8 @@ class JOpenstreetmap
 		$this->client  = isset($client) ? $client : new JHttp($this->options);
 	
 		// Setup the default API url if not already set.
-		//$this->options->def('api.url', 'http://api.openstreetmap.org');
-		$this->options->def('api.url', 'http://api06.dev.openstreetmap.org');
+		$this->options->def('api.url', 'http://api.openstreetmap.org');
+		//$this->options->def('api.url', 'http://api06.dev.openstreetmap.org');
 	}
 	
 	/**	
