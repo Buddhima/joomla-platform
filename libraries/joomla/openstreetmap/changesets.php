@@ -37,7 +37,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		
 		
 		// Set the API base
-		$base = '/api/0.6/changeset/create' ;
+		$base = 'changeset/create' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -67,14 +67,10 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		
 		$xml.='</osm>';
 		
-// 		echo htmlspecialchars($xml);
-// 		echo '$#@FF#@#$<br/>';
-		
 		$header['Content-Type'] = 'text/xml';
 		
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
-// 		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml);
 		
 		return $response->body;		
 		
@@ -93,7 +89,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	{
 
 		// Set the API base
-		$base = '/api/0.6/changeset/'.$id ;
+		$base = 'changeset/'.$id ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -124,7 +120,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		);
 		
 		// Set the API base
-		$base = '/api/0.6/changeset/'.$id ;
+		$base = 'changeset/'.$id ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -146,7 +142,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
    				 .$tag_list.
   				'</changeset>  
 			</osm>'; 
-		//echo htmlspecialchars($xml);
+		
 		$header['Content-Type'] = 'text/xml';
 		
 		// Send the request.
@@ -174,7 +170,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		);
 		
 		// Set the API base
-		$base = '/api/0.6/changeset/'.$id.'/close' ;
+		$base = 'changeset/'.$id.'/close' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -198,7 +194,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	{
 				
 		// Set the API base
-		$base = '/api/0.6/changeset/'.$id.'/download' ;
+		$base = 'changeset/'.$id.'/download' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -229,7 +225,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		);
 		
 		// Set the API base
-		$base = '/api/0.6/changeset/'.$id.'/expand_bbox' ;
+		$base = 'changeset/'.$id.'/expand_bbox' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -251,7 +247,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 				.$node_list.
 				'</changeset>
 			</osm>';
-		echo htmlspecialchars($xml);
+		 
 		
 		$header['Content-Type'] = 'text/xml';
 		
@@ -273,9 +269,20 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param unknown_type $time
 	 * @param unknown_type $state
 	 */
-	public function queryChangeset($oauth, $bbox=null, $userId=null, $displayName=null, $time=null, $state=null)
+	public function queryChangeset($oauth, $param)
 	{
+		// Set the API base
+		$base = 'changesets/'.$param ;
 		
+		// Build the request path.
+		$path = $this->getOption('api.url') . $base;
+		
+		// Send the request.
+		$response = $oauth->oauthRequest($path, 'GET',  array());
+		
+		$xml_string= simplexml_load_string ( $response->body );
+		
+		return $xml_string->osm;
 	}
 	
 	/**
@@ -295,7 +302,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		);
 		
 		// Set the API base
-		$base = '/api/0.6/changeset/'.$id.'/upload' ;
+		$base = 'changeset/'.$id.'/upload' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -305,6 +312,8 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);
 		
-		return $response;
+		$xml_string= simplexml_load_string ( $response->body );
+		
+		return $xml_string->diffResult;
 	}
 }

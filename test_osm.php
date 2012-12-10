@@ -32,9 +32,9 @@ class OsmApp extends JApplicationWeb
 		
 		//$access_token = array('key' => '617544537-uMhDHjkCPGbgsb8NASkyWOfQj6wkIGWNjtZOIxDX', 'secret' => 'x9VpWp0tGK7q7lIlTyij7c0kfpRKWEWNJo2daPqHU8');
 		//$oauth->setToken($access_token);
-		$new_token = $oauth->authenticate();
+// 		$new_token = $oauth->authenticate();
 		
-		$oauth->setToken($new_token);
+// 		$oauth->setToken($new_token);
 		
 
 		$osm=new JOpenstreetmap();
@@ -77,8 +77,8 @@ class OsmApp extends JApplicationWeb
 // 		$result = $changeset ->updateChangeset($oauth, '14153877',array("C"=>"Cat","D"=>"Dogs"));
 		//$result = $changeset ->closeChangeset($oauth, '14153877');
 		//$result = $changeset -> readChangeset($oauth, '14153877');
-		$result=$element->createNode($oauth, '14153708', '5.5', '6.7', array("C"=>"Cat","D"=>"Dogs"));
-		print_r($result);
+// 		$result=$element->createNode($oauth, '14153708', '5.5', '6.7', array("C"=>"Cat","D"=>"Dogs"));
+// 		print_r($result);
 		echo '$$$$<br />';
 		$result = $changeset -> readChangeset($oauth, '14153708');
 		print_r($result);

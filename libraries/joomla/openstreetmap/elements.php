@@ -20,38 +20,7 @@ defined('JPATH_PLATFORM') or die();
 class JOpenstreetmapElements extends JOpenstreetmapObject
 {
 
-	/**
-	 * Create an Element [node|way|relation]
-	 *
-	 * @param unknown_type $oauth
-	 * @param unknown_type $element
-	 */
-	/*public function createElement($oauth, $element)
-	{
-		if($element!='node' && $element!='way' && $element!='relation'){
-			return;
-		}
-
-		$token = $oauth->getToken();
-
-		// Set parameters.
-		$parameters = array(
-				'oauth_token' => $token['key']
-		);
-
-		// Set the API base
-		$base = '/api/0.6/'.$element.'/create' ;
-
-		// Build the request path.
-		$path = $this->getOption('api.url') . $base;
-
-		$header['Content-Type'] = 'text/xml';
-
-		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
-
-		return $response;
-	}*/
+	
 	
 	// expecting a associated array for $tags eg:	$tags=array("A"=>"Apple","B"=>"Ball");
 	public function createNode($oauth,$changeset,$latitude,$longitude,$tags)
@@ -64,7 +33,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 		
 		// Set the API base
-		$base = '/api/0.6/node/create' ;
+		$base = 'node/create' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -115,7 +84,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 		
 		// Set the API base
-		$base = '/api/0.6/node/create' ;
+		$base = 'node/create' ;
 		
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -170,7 +139,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 	
 		// Set the API base
-		$base = '/api/0.6/node/create' ;
+		$base = 'node/create' ;
 	
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -239,7 +208,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		}
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id ;
+		$base = $element.'/'.$id ;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -274,7 +243,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id ;
+		$base = $element.'/'.$id ;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -311,7 +280,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id ;
+		$base = $element.'/'.$id ;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -351,7 +320,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		}
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id.'/history' ;
+		$base = $element.'/'.$id.'/history' ;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -379,7 +348,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		}
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id.'/'.$version ;
+		$base = $element.'/'.$id.'/'.$version ;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -413,7 +382,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$single_element=substr($element, 0,strlen($element)-1);
 		
 		// Set the API base
-		$base = '/api/0.6/'.$element.'?'.$element."=".$params ; //$params is a string with comma seperated values
+		$base = $element.'?'.$element."=".$params ; //$params is a string with comma seperated values
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -443,7 +412,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		}
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id.'/relations';
+		$base = $element.'/'.$id.'/relations';
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -467,7 +436,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	public function waysForNode($oauth, $id)
 	{		
 		// Set the API base
-		$base = '/api/0.6/node/'.$id.'/ways';
+		$base = 'node/'.$id.'/ways';
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -496,7 +465,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		}
 
 		// Set the API base
-		$base = '/api/0.6/'.$element.'/'.$id.'/full';
+		$base = $element.'/'.$id.'/full';
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -506,6 +475,33 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 
 		$xml_string= simplexml_load_string ( $response->body );
 		
+		return $xml_string->node;
+	}
+	
+	public function redaction($oauth, $element, $id, $version, $redaction_id)
+	{
+		if($element!='node' && $element!='way' && $element!='relation'){
+			return;
+		}
+		
+		$token = $oauth->getToken();
+		
+		// Set parameters.
+		$parameters = array(
+				'oauth_token' => $token['key']
+		);
+	
+		// Set the API base
+		$base = $element.'/'.$id.'/'.$version.'/redact?redaction='.$redaction_id;
+	
+		// Build the request path.
+		$path = $this->getOption('api.url') . $base;
+	
+		// Send the request.
+		$response = $oauth->oauthRequest($path, 'PUT', $parameters);
+	
+		$xml_string= simplexml_load_string ( $response->body );
+	
 		return $xml_string->node;
 	}
 }
