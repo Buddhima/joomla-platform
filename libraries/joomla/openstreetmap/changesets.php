@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die();
 
 /**
- * Joomla Platform class for generating Openstreetmap API access token.
+ * Openstreetmap API Changesets class for the Joomla Platform
  *
  * @package     Joomla.Platform
  * @subpackage  Openstreetmap
@@ -20,10 +20,14 @@ defined('JPATH_PLATFORM') or die();
 class JOpenstreetmapChangesets extends JOpenstreetmapObject
 {
 	/**
-	 * Creates a changeset
+	 * Method to create a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $xml
+	 * @param	JOpenstreetmapOauth		$oauth			object which contains oauth data	
+	 * @param	array					$changesets		array which contains changeset data
+	 * 
+	 * @return	array	The xml response
+	 * 
+	 * @since 	12.3
 	 */
 	public function createChangeset($oauth, $changesets=array())
 	{
@@ -33,8 +37,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$parameters = array(
 				'oauth_token' => $token['key'],
 				'oauth_token_secret'=>$token['secret']
-		);
-		
+		);		
 		
 		// Set the API base
 		$base = 'changeset/create' ;
@@ -43,7 +46,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 		
 		$xml='<?xml version="1.0" encoding="UTF-8"?>
-<osm version="0.6" generator="JOpenstreetmap">';
+			<osm version="0.6" generator="JOpenstreetmap">';
 		if(!empty($changesets))
 		{	
 			// Create Changeset element for every changeset		
@@ -58,8 +61,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 						
 						$xml.='<tag k="'.$key.'" v="'.$value.'"/>';
 						
-					}
-					
+					}					
 				}				
 				$xml.='</changeset>';
 			}
@@ -77,13 +79,14 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Read a changeset
+	 * Method to read a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $id
-	 * @return associated array with details about a changeset
+	 * @param	JOpenstreetmapOauth		$oauth		object which contains oauth data
+	 * @param	int						$id			identifier of the changeset
 	 * 
-	 * $changeset=$osm->changesets;	$result=$changeset->readChangeset($oauth, '20');
+	 * @return	array	The xml response about a changeset
+	 *  
+	 * @since 	12.3
 	 */
 	public function readChangeset($oauth, $id)
 	{
@@ -104,11 +107,15 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Update a changeset
+	 * Method to update a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $xml
-	 * @param unknown_type $id
+	 * @param	JOpenstreetmapOauth		$oauth		object which contains oauth data
+	 * @param 	int						$id			identifier of the changeset
+	 * @param 	array					$tags		array of tags to update
+	 * 
+	 * @return	array	The xml response of updated changeset
+	 * 
+	 * @since 	12.3 
 	 */
 	public function updateChangeset($oauth, $id, $tags=array() )
 	{
@@ -137,7 +144,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		}
 		
 		$xml='<?xml version="1.0" encoding="UTF-8"?>
-<osm version="0.6" generator="JOpenstreetmap">
+				<osm version="0.6" generator="JOpenstreetmap">
   				<changeset>'
    				 .$tag_list.
   				'</changeset>  
@@ -154,11 +161,12 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Close a changeset
+	 * Method to close a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $id
-	 * No value will return
+	 * @param	JOpenstreetmapOauth		$oauth		object which contains oauth data
+	 * @param	int						$id			identifier of the changeset
+	 * 
+	 * @since 	12.3
 	 */
 	public function closeChangeset($oauth, $id)
 	{
@@ -183,12 +191,14 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Download a changeset
+	 * Method to download a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $id
-	 * @return associated array contain all modifications done to changeset
-	 * $result=$changeset->downloadChangeset($oauth, '20');		print_r($result[2]);
+	 * @param	JOpenstreetmapOauth		$oauth		object which contains oauth data
+	 * @param	int						$id			identifier of the changeset
+	 * 
+	 * @return	array	The xml response of requested changeset
+	 * 
+	 * @since 	12.3
 	 */
 	public function downloadChangeset($oauth, $id)
 	{
@@ -208,12 +218,15 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Expand the bounding box of a changeset
+	 * Method to expand the bounding box of a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $xml
-	 * @param unknown_type $id
-	 * @return mixed
+	 * @param	JOpenstreetmapOauth		$oauth		object which contains oauth data
+	 * @param	int						$id			identifier of the changeset
+	 * @param	array					$nodes		list of lat lon about nodes
+	 * 
+	 * @return	array	The xml response of changed changeset
+	 * 
+	 * @since 	12.3
 	 */
 	public function expandBBoxChangeset($oauth, $id, $nodes)
 	{
@@ -242,7 +255,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		}
 		
 		$xml='<?xml version="1.0" encoding="UTF-8"?>
-<osm version="0.6" generator="JOpenstreetmap">
+				<osm version="0.6" generator="JOpenstreetmap">
 				<changeset>'
 				.$node_list.
 				'</changeset>
@@ -260,14 +273,14 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Query on changesets -to be implemented
+	 * Method to Query on changesets
 	 *  
-	 * @param unknown_type $oauth
-	 * @param unknown_type $bbox
-	 * @param unknown_type $userId
-	 * @param unknown_type $displayName
-	 * @param unknown_type $time
-	 * @param unknown_type $state
+	 * @param	JOpenstreetmapOauth 	$oauth		object which contains oauth data
+	 * @param	string					$param		parameters for query
+	 * 
+	 * @return	array	The xml response
+	 * 
+	 * @since 	12.3
 	 */
 	public function queryChangeset($oauth, $param)
 	{
@@ -286,11 +299,15 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	}
 	
 	/**
-	 * Upload a diff to a changeset - to be implemented
+	 * Method to upload a diff to a changeset
 	 * 
-	 * @param unknown_type $oauth
-	 * @param unknown_type $xml
-	 * @param unknown_type $id
+	 * @param	JOpenstreetmapOauth		$oauth		object which contains oauth data
+	 * @param	string					$xml		diff data to upload
+	 * @param	int						$id			identifier of the changeset
+	 * 
+	 * @return	array	The xml response of result
+	 * 
+	 * @since 	12.3
 	 */
 	public function diffUploadChangeset($oauth, $xml, $id)
 	{

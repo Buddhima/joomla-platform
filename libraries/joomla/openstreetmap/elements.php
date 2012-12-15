@@ -23,6 +23,14 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	
 	
 	// expecting a associated array for $tags eg:	$tags=array("A"=>"Apple","B"=>"Ball");
+	/**
+	 * 
+	 * @param unknown $oauth
+	 * @param unknown $changeset
+	 * @param unknown $latitude
+	 * @param unknown $longitude
+	 * @param unknown $tags
+	 */
 	public function createNode($oauth,$changeset,$latitude,$longitude,$tags)
 	{
 		$token = $oauth->getToken();
@@ -215,7 +223,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'GET', array());
-
+		
 		$xml_string= simplexml_load_string ( $response->body );
 		
 		return $xml_string->$element;
