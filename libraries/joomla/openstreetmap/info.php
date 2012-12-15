@@ -10,16 +10,23 @@
 defined('JPATH_PLATFORM') or die();
 
 /**
- * Joomla Platform class for generating Openstreetmap API access token.
+ * Openstreetmap API Info class for the Joomla Platform
  *
  * @package     Joomla.Platform
  * @subpackage  Openstreetmap
  *
  * @since       12.3
 */
-
 class JOpenstreetmapInfo extends JOpenstreetmapObject
 {
+	
+	/**
+	 * Method to get capabilities of the API
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function getCapabilities(){
 		
 		// Set the API base
@@ -36,6 +43,18 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		return $xml_string;
 	}
 	
+	/**
+	 * Method to retrieve map data of a bounding box
+	 * 
+	 * @param	float	$left		left boundary
+	 * @param	float	$bottom		bottom boundary
+	 * @param	float	$right		right boundary
+	 * @param	float	$top		top boundary
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function retrieveMapData($left, $bottom, $right, $top)
 	{
 		
@@ -52,7 +71,16 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		
 		return $xml_string;
 	}
-	
+
+	/**
+	 * Method to retrieve permissions for current user
+	 * 
+	 * @param	JOpenstreetmapOauth	$oauth		object which contains oauth data
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function retrievePermissions($oauth=null)
 	{
 		if($oauth!=null)

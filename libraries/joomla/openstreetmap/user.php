@@ -10,16 +10,24 @@
 defined('JPATH_PLATFORM') or die();
 
 /**
- * Joomla Platform class for generating Openstreetmap API access token.
+ * Openstreetmap API User class for the Joomla Platform
  *
  * @package     Joomla.Platform
  * @subpackage  Openstreetmap
  *
  * @since       12.3
 */
-
 class JOpenstreetmapUser extends JOpenstreetmapObject
 {
+	/**
+	 * Method to get user details
+	 * 
+	 * @param	JOpenstreetmapOauth	$oauth	object which contains oauth data
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function getDetails($oauth)
 	{
 		$token = $oauth->getToken();
@@ -40,7 +48,16 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		
 		return $response->body;
 	}
-	
+
+	/**
+	 * Method to get preferences
+	 * 
+	 * @param	JOpenstreetmapOauth	$oauth	object which contains oauth data
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function getPreferences($oauth)
 	{
 		$token = $oauth->getToken();
@@ -61,7 +78,17 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		
 		return $response->body;
 	}
-	
+
+	/**
+	 * Method to replace user preferences
+	 * 
+	 * @param	JOpenstreetmapOauth	$oauth			object which contains oauth data
+	 * @param	array				$preferences	array of new preferences
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function replacePreferences($oauth, $preferences)
 	{
 		$token = $oauth->getToken();
@@ -102,7 +129,18 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	
 		return $response->body;
 	}
-	
+
+	/**
+	 * Method to change user preferences
+	 * 
+	 * @param	JOpenstreetmapOauth	$oauth			object which contains oauth data
+	 * @param	string				$key			key of the preference
+	 * @param	string				$preference		new value for preference
+	 * 
+	 * @return	array The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function changePreference($oauth, $key, $preference)
 	{
 		$token = $oauth->getToken();

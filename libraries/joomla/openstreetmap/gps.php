@@ -10,16 +10,28 @@
 defined('JPATH_PLATFORM') or die();
 
 /**
- * Joomla Platform class for generating Openstreetmap API access token.
+ * Openstreetmap API Gps class for the Joomla Platform
  *
  * @package     Joomla.Platform
  * @subpackage  Openstreetmap
  *
  * @since       12.3
  */
-
 class JOpenstreetmapGps extends JOpenstreetmapObject
 {
+	/**
+	 * Method to retrieve GPS points
+	 * 
+	 * @param	float		$left		left boundary
+	 * @param	float		$bottom		bottom boundary
+	 * @param	float		$right		right boundary
+	 * @param	float		$top		top boundary
+	 * @param	int			$page		page number
+	 * 
+	 * @return	array	The xml response containing GPS points
+	 * 
+	 * @since	12.3
+	 */
 	public function retrieveGps($left,$bottom,$right,$top,$page=0)
 	{
 		// Set the API base
@@ -36,6 +48,19 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 		return $xml_string;
 	}
 	
+	/**
+	 * Method to upload GPS Traces
+	 * 
+	 * @param	string		$file				file name that contains trace points
+	 * @param	string		$description		description on trace points
+	 * @param	string		$tags				tags for trace
+	 * @param	int			$public				1 for public, 0 for private
+	 * @param	string		$visibility			One of the following: private, public, trackable, identifiable
+	 * 
+	 * @return	JHttpResponse the response
+	 * 
+	 * @since	12.3
+	 */
 	public function uploadTrace($file, $description, $tags, $public, $visibility)
 	{
 		
@@ -57,13 +82,20 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 		$header['Content-Type'] = 'multipart/form-data';
 		
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);
-		
-		
-		
+		$response = $oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);		
+
 		return $response;
 	}
 	
+	/**
+	 * Method to download Trace details
+	 * 
+	 * @param	int 		$id					trace identifier
+	 * 
+	 * @return	array	The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function downloadTraceDetails($id)
 	{
 		
@@ -81,6 +113,15 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 		return $xml_string;
 	}
 	
+	/**
+	 * Method to download Trace data
+	 * 
+	 * @param	int			$id					trace identifier
+	 * 
+	 * @return	array	The xml response
+	 * 
+	 * @since	12.3
+	 */
 	public function downloadTraceData($id)
 	{
 	
