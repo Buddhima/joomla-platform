@@ -56,14 +56,15 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 	 * @param	string		$tags				tags for trace
 	 * @param	int			$public				1 for public, 0 for private
 	 * @param	string		$visibility			One of the following: private, public, trackable, identifiable
+	 * @param	string		$username			username
+	 * @param	string		$password			password
 	 * 
 	 * @return	JHttpResponse the response
 	 * 
 	 * @since	12.3
 	 */
-	public function uploadTrace($file, $description, $tags, $public, $visibility)
+	public function uploadTrace($file, $description, $tags, $public, $visibility, $username, $password)
 	{
-		
 		// Set parameters.
 		$parameters = array(
 				'file' => $file,
@@ -81,8 +82,11 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 		
 		$header['Content-Type'] = 'multipart/form-data';
 		
+		$header = array_merge($header, $parameters);
+		$header = array_merge($header,array('Authorization'=> 'Basic '.base64_encode($username.':'.$password)));
+
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);		
+		$response = $this->client->post($path, array(), $header);
 
 		return $response;
 	}
@@ -91,25 +95,30 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 	 * Method to download Trace details
 	 * 
 	 * @param	int 		$id					trace identifier
+	 * @param	string		$username			username
+	 * @param	string		$password			password
 	 * 
 	 * @return	array	The xml response
 	 * 
 	 * @since	12.3
 	 */
-	public function downloadTraceDetails($id)
+	public function downloadTraceMetadetails($id, $username, $password)
 	{
-		
 		// Set the API base
 		$base = 'gpx/'.$id.'/details';
-		
+
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
-		
+
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-		
+		$response = $this->client->get($path,array('Authorization'=> 'Basic '.base64_encode($username.':'.$password)));
+
+		echo '###### <br />';
+		print_r($response);
+		echo '###### <br />';
+
 		$xml_string= simplexml_load_string ( $response->body );
-		
+
 		return $xml_string;
 	}
 	
@@ -117,25 +126,31 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 	 * Method to download Trace data
 	 * 
 	 * @param	int			$id					trace identifier
+	 * @param	string		$username			username
+	 * @param	string		$password			password
 	 * 
 	 * @return	array	The xml response
 	 * 
 	 * @since	12.3
 	 */
-	public function downloadTraceData($id)
+	public function downloadTraceMetadata($id, $username, $password)
 	{
-	
 		// Set the API base
 		$base = 'gpx/'.$id.'/data';
-	
+
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
-	
+
+		$client = JHttpFactory::getHttp();
+
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-	
+		$response = $this->client->get($path,array('Authorization'=> 'Basic '.base64_encode($username.':'.$password)));
+
+		echo '###### <br />';
+		print_r($response);
+		echo '###### <br />';
 		$xml_string= simplexml_load_string ( $response->body );
-	
+
 		return $xml_string;
 	}
 }

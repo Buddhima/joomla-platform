@@ -32,7 +32,7 @@ class OsmApp extends JApplicationWeb
 		
 		//$access_token = array('key' => '617544537-uMhDHjkCPGbgsb8NASkyWOfQj6wkIGWNjtZOIxDX', 'secret' => 'x9VpWp0tGK7q7lIlTyij7c0kfpRKWEWNJo2daPqHU8');
 		//$oauth->setToken($access_token);
-		$new_token = $oauth->authenticate();
+//		$new_token = $oauth->authenticate();
 		
 // 		$oauth->setToken($new_token);
 		
@@ -47,6 +47,7 @@ class OsmApp extends JApplicationWeb
 		$element=$osm->elements;
 		//$result= $element->createNode($oauth, '1', '34', '54', array("A"=>"Apple","B"=>"Ball"));
 		
+		$gps=$osm->gps;
 		
 		$changesets = array
 		(
@@ -80,12 +81,12 @@ class OsmApp extends JApplicationWeb
 // 		$result=$element->createNode($oauth, '14153708', '5.5', '6.7', array("C"=>"Cat","D"=>"Dogs"));
 // 		print_r($result);
 		echo '$$$$<br />';
-		$result = $changeset -> readChangeset($oauth, '14153708');
-		print_r($result);
+// 		$result = $changeset -> readChangeset($oauth, '14153708');
+// 		print_r($result);
 		echo '<br />';
 // 		$result=$element->readElement($oauth, 'node', '2050021859');
-		$result=$element->readElement($oauth, 'node', '123');
-		print_r($result);
+// 		$result=$element->readElement($oauth, 'node', 123);
+// 		print_r($result);
 		
 		//$result = $changeset ->updateChangeset($oauth, '1',$tags);
 		
@@ -96,6 +97,8 @@ class OsmApp extends JApplicationWeb
 // 		$result = $changeset ->expandBBoxChangeset($oauth,'1',$node_list);
 // 		print_r('DDDDPPPPP');
 		//print_r($new_token);
+		$result =$gps->downloadTraceMetadata('836619','bswije','buddhima');
+		print_r($result);
 
 	}
 }

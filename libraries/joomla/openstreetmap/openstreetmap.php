@@ -42,6 +42,24 @@ class JOpenstreetmap
 	 * @since  12.3
 	 */
 	protected $elements;
+	
+	/**
+	 * @var    JOpenstreetmapGps  Openstreetmap API object for gps.
+	 * @since  12.3
+	 */
+	protected $gps;
+	
+	/**
+	 * @var    JOpenstreetmapGps  Openstreetmap API object for info.
+	 * @since  12.3
+	 */
+	protected $info;
+	
+	/**
+	 * @var    JOpenstreetmapGps  Openstreetmap API object for user.
+	 * @since  12.3
+	 */
+	protected $user;
 		
 	/**
 	 * Constructor.
@@ -85,7 +103,28 @@ class JOpenstreetmap
 				{
 					$this->elements = new JOpenstreetmapElements($this->options, $this->client);
 				}
-				return $this->elements;				
+				return $this->elements;	
+				
+			case 'gps':
+				if ($this->gps == null)
+				{
+					$this->gps = new JOpenstreetmapGps($this->options, $this->client);
+				}
+				return $this->gps;
+					
+			case 'info':
+				if ($this->info == null)
+				{
+					$this->info = new JOpenstreetmapInfo($this->options, $this->client);
+				}
+				return $this->info;
+						
+			case 'user':
+				if ($this->user == null)
+				{
+					$this->user = new JOpenstreetmapUser($this->options, $this->client);
+				}
+				return $this->user;
 		}
 	}
 	
