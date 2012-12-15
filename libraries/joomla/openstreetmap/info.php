@@ -30,25 +30,25 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	{
 		// Set the API base
 		$base = 'capabilities';
-		
+
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
-		
+
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'GET', array());
-		
-		$xml_string= simplexml_load_string ( $response->body );
-		
+
+		$xml_string = simplexml_load_string($response->body);
+
 		return $xml_string;
 	}
 
 	/**
 	 * Method to retrieve map data of a bounding box
 	 * 
-	 * @param	float	$left		left boundary
-	 * @param	float	$bottom		bottom boundary
-	 * @param	float	$right		right boundary
-	 * @param	float	$top		top boundary
+	 * @param   float  $left    left boundary
+	 * @param   float  $bottom  bottom boundary
+	 * @param   float  $right   right boundary
+	 * @param   float  $top     top boundary
 	 * 
 	 * @return	array The xml response
 	 * 
@@ -57,23 +57,23 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	public function retrieveMapData($left, $bottom, $right, $top)
 	{
 		// Set the API base
-		$base = 'map?bbox='.$left.','.$bottom.','.$right.','.$top;
-	
+		$base = 'map?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top;
+
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
-	
+
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'GET', array());
-	
-		$xml_string= simplexml_load_string ( $response->body );
-	
+
+		$xml_string = simplexml_load_string($response->body);
+
 		return $xml_string;
 	}
 
 	/**
 	 * Method to retrieve permissions for current user
 	 * 
-	 * @param	JOpenstreetmapOauth	$oauth		object which contains oauth data
+	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * 
 	 * @return	array The xml response
 	 * 
@@ -81,7 +81,7 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	 */
 	public function retrievePermissions($oauth=null)
 	{
-		if($oauth!=null)
+		if ($oauth != null)
 		{
 			$token = $oauth->getToken();
 		}
@@ -95,8 +95,8 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'GET', array());
 
-		$xml_string= simplexml_load_string ( $response->body );
-	
+		$xml_string = simplexml_load_string($response->body);
+
 		return $xml_string;
 	}
 }

@@ -22,7 +22,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to get user details
 	 * 
-	 * @param	JOpenstreetmapOauth	$oauth	object which contains oauth data
+	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * 
 	 * @return	array The xml response
 	 * 
@@ -52,7 +52,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to get preferences
 	 * 
-	 * @param	JOpenstreetmapOauth	$oauth	object which contains oauth data
+	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * 
 	 * @return	array The xml response
 	 * 
@@ -82,8 +82,8 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to replace user preferences
 	 * 
-	 * @param	JOpenstreetmapOauth	$oauth			object which contains oauth data
-	 * @param	array				$preferences	array of new preferences
+	 * @param   JOpenstreetmapOauth  $oauth        object which contains oauth data
+	 * @param   array                $preferences  array of new preferences
 	 * 
 	 * @return	array The xml response
 	 * 
@@ -105,22 +105,22 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Create a list of preferences
-		$preference_list='';
-		if(!empty($preferences))
+		$preference_list = '';
+
+		if (!empty($preferences))
 		{
-			foreach ($preferences as $key=>$value){
-				
-				$preference_list.='<preference k="'.$key.'" v="'.$value.'"/>';
-								
+			foreach ($preferences as $key => $value)
+			{
+				$preference_list .= '<preference k="' . $key . '" v="' . $value . '"/>';
 			}
 		}
 
-		$xml='<?xml version="1.0" encoding="UTF-8"?>
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>
 			<osm version="0.6" generator="JOpenstreetmap">
 				<preferences>'
-				.$preference_list.
+				. $preference_list .
 				'</preferences>
-			</osm>';		
+			</osm>';
 
 		$header['Content-Type'] = 'text/xml';
 
@@ -133,9 +133,9 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to change user preferences
 	 * 
-	 * @param	JOpenstreetmapOauth	$oauth			object which contains oauth data
-	 * @param	string				$key			key of the preference
-	 * @param	string				$preference		new value for preference
+	 * @param   JOpenstreetmapOauth  $oauth       object which contains oauth data
+	 * @param   string               $key         key of the preference
+	 * @param   string               $preference  new value for preference
 	 * 
 	 * @return	array The xml response
 	 * 
@@ -151,7 +151,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		);
 
 		// Set the API base
-		$base = 'user/preferences/'.$key;
+		$base = 'user/preferences/' . $key;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
