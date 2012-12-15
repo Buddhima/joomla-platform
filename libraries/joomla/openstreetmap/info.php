@@ -19,7 +19,6 @@ defined('JPATH_PLATFORM') or die();
 */
 class JOpenstreetmapInfo extends JOpenstreetmapObject
 {
-	
 	/**
 	 * Method to get capabilities of the API
 	 * 
@@ -27,8 +26,8 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	 * 
 	 * @since	12.3
 	 */
-	public function getCapabilities(){
-		
+	public function getCapabilities()
+	{
 		// Set the API base
 		$base = 'capabilities';
 		
@@ -42,7 +41,7 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		
 		return $xml_string;
 	}
-	
+
 	/**
 	 * Method to retrieve map data of a bounding box
 	 * 
@@ -57,18 +56,17 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	 */
 	public function retrieveMapData($left, $bottom, $right, $top)
 	{
-		
 		// Set the API base
 		$base = 'map?bbox='.$left.','.$bottom.','.$right.','.$top;
-		
+	
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
-		
+	
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'GET', array());
-		
+	
 		$xml_string= simplexml_load_string ( $response->body );
-		
+	
 		return $xml_string;
 	}
 
@@ -87,18 +85,18 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		{
 			$token = $oauth->getToken();
 		}
-		
+
 		// Set the API base
 		$base = 'permissions';
-		
+
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
-		
+
 		// Send the request.
 		$response = $oauth->oauthRequest($path, 'GET', array());
-		
+
 		$xml_string= simplexml_load_string ( $response->body );
-		
+	
 		return $xml_string;
 	}
 }
