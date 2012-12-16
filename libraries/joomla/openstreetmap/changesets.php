@@ -25,9 +25,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   JOpenstreetmapOauth  $oauth       object which contains oauth data	
 	 * @param   array                $changesets  array which contains changeset data
 	 * 
-	 * @return	array	The xml response
+	 * @return  array   The xml response
 	 * 
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function createChangeset($oauth, $changesets=array())
 	{
@@ -87,9 +87,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * 
-	 * @return	array	The xml response about a changeset
+	 * @return  array    The xml response about a changeset
 	 *  
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function readChangeset($oauth, $id)
 	{
@@ -116,9 +116,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   int                  $id     identifier of the changeset
 	 * @param   array                $tags   array of tags to update
 	 * 
-	 * @return	array	The xml response of updated changeset
+	 * @return  array    The xml response of updated changeset
 	 * 
-	 * @since 	12.3 
+	 * @since   12.3 
 	 */
 	public function updateChangeset($oauth, $id, $tags=array() )
 	{
@@ -171,9 +171,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * 
-	 * @return No value returns
+	 * @return  No value returns
 	 * 
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function closeChangeset($oauth, $id)
 	{
@@ -203,9 +203,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * 
-	 * @return	array	The xml response of requested changeset
+	 * @return  array	The xml response of requested changeset
 	 * 
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function downloadChangeset($oauth, $id)
 	{
@@ -231,9 +231,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   int                  $id     identifier of the changeset
 	 * @param   array                $nodes  list of lat lon about nodes
 	 * 
-	 * @return	array	The xml response of changed changeset
+	 * @return  array    The xml response of changed changeset
 	 * 
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function expandBBoxChangeset($oauth, $id, $nodes)
 	{
@@ -286,9 +286,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   string               $param  parameters for query
 	 * 
-	 * @return	array	The xml response
+	 * @return  array    The xml response
 	 * 
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function queryChangeset($oauth, $param)
 	{
@@ -313,9 +313,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * @param   string               $xml    diff data to upload
 	 * @param   int                  $id     identifier of the changeset
 	 * 
-	 * @return	array	The xml response of result
+	 * @return  array    The xml response of result
 	 * 
-	 * @since 	12.3
+	 * @since   12.3
 	 */
 	public function diffUploadChangeset($oauth, $xml, $id)
 	{
