@@ -20,19 +20,19 @@ defined('JPATH_PLATFORM') or die();
 
 abstract class JOpenstreetmapObject
 {
-	
+
 	/**
 	 * @var    JRegistry  Options for the Openstreetmap object.
 	 * @since  12.3
 	 */
 	protected $options;
-	
+
 	/**
 	 * @var    JHttp  The HTTP client object to use in sending HTTP requests.
 	 * @since  12.3
 	 */
 	protected $client;
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -46,7 +46,7 @@ abstract class JOpenstreetmapObject
 		$this->options = isset($options) ? $options : new JRegistry;
 		$this->client = isset($client) ? $client : new JHttp($this->options);
 	}
-	
+
 	/**
 	 * Method to convert boolean to string.
 	 *
@@ -67,7 +67,7 @@ abstract class JOpenstreetmapObject
 			return 'false';
 		}
 	}
-	
+
 	/**
 	 * Get an option from the JOpenstreetmapObject instance.
 	 *
@@ -81,7 +81,7 @@ abstract class JOpenstreetmapObject
 	{
 		return $this->options->get($key);
 	}
-	
+
 	/**
 	 * Set an option for the JOpenstreetmapObject instance.
 	 *
@@ -95,7 +95,7 @@ abstract class JOpenstreetmapObject
 	public function setOption($key, $value)
 	{
 		$this->options->set($key, $value);
-	
+
 		return $this;
 	}
 }

@@ -42,10 +42,12 @@ class JOpenstreetmapOauth extends JOAuth1Client
 		$this->options->def('authoriseURL', 'http://www.openstreetmap.org/oauth/authorize');
 		$this->options->def('requestTokenURL', 'http://www.openstreetmap.org/oauth/request_token');
 
-// 		$this->options->def('accessTokenURL', 'http://api06.dev.openstreetmap.org/oauth/access_token');
-// 		$this->options->def('authoriseURL', 'http://api06.dev.openstreetmap.org/oauth/authorize');
-// 		$this->options->def('requestTokenURL', 'http://api06.dev.openstreetmap.org/oauth/request_token');
-		
+		/*
+		$this->options->def('accessTokenURL', 'http://api06.dev.openstreetmap.org/oauth/access_token');
+		$this->options->def('authoriseURL', 'http://api06.dev.openstreetmap.org/oauth/authorize');
+		$this->options->def('requestTokenURL', 'http://api06.dev.openstreetmap.org/oauth/request_token');
+		*/
+
 		// Call the JOauth1Client constructor to setup the object.
 		parent::__construct('1.0', $this->options, $client, $input);
 	}
@@ -59,8 +61,7 @@ class JOpenstreetmapOauth extends JOAuth1Client
 	 */
 	public function verifyCredentials()
 	{
-			return true;
-		
+		return true;
 	}
 
 	/**
@@ -76,13 +77,11 @@ class JOpenstreetmapOauth extends JOAuth1Client
 	 */
 	public function validateResponse($url, $response)
 	{
-		
 		if ($response->code != 200)
 		{
 			$error = htmlspecialchars($response->body);
-		
+
 			throw new DomainException($error, $response->code);
-			
-		} 
+		}
 	}
 }

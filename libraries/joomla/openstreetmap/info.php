@@ -50,9 +50,9 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	 * @param   float  $right   right boundary
 	 * @param   float  $top     top boundary
 	 * 
-	 * @return	array The xml response
+	 * @return  array The xml response
 	 * 
-	 * @since	12.3
+	 * @since   12.3
 	 */
 	public function retrieveMapData($left, $bottom, $right, $top)
 	{
@@ -75,9 +75,9 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	 * 
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * 
-	 * @return	array The xml response
+	 * @return  array The xml response
 	 * 
-	 * @since	12.3
+	 * @since   12.3
 	 */
 	public function retrievePermissions($oauth=null)
 	{

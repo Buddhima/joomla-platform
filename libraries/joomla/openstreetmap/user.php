@@ -24,9 +24,9 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	 * 
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * 
-	 * @return	array The xml response
+	 * @return  array The xml response
 	 * 
-	 * @since	12.3
+	 * @since   12.3
 	 */
 	public function getDetails($oauth)
 	{
@@ -54,9 +54,9 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	 * 
 	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * 
-	 * @return	array The xml response
+	 * @return  array The xml response
 	 * 
-	 * @since	12.3
+	 * @since   12.3
 	 */
 	public function getPreferences($oauth)
 	{
@@ -85,9 +85,9 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	 * @param   JOpenstreetmapOauth  $oauth        object which contains oauth data
 	 * @param   array                $preferences  array of new preferences
 	 * 
-	 * @return	array The xml response
+	 * @return  array The xml response
 	 * 
-	 * @since	12.3
+	 * @since   12.3
 	 */
 	public function replacePreferences($oauth, $preferences)
 	{
@@ -137,9 +137,9 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	 * @param   string               $key         key of the preference
 	 * @param   string               $preference  new value for preference
 	 * 
-	 * @return	array The xml response
+	 * @return  array The xml response
 	 * 
-	 * @since	12.3
+	 * @since   12.3
 	 */
 	public function changePreference($oauth, $key, $preference)
 	{
