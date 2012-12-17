@@ -97,7 +97,7 @@ class OsmApp extends JApplicationWeb
 // 		$result = $changeset ->expandBBoxChangeset($oauth,'1',$node_list);
 // 		print_r('DDDDPPPPP');
 		//print_r($new_token);
-		$result =$gps->downloadTraceMetadata('836619','bswije','buddhima');
+		$result =$gps->downloadTraceMetadetails('1370260','bswije','buddhima');
 		print_r($result);
 
 	}
