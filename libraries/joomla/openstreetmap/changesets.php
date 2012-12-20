@@ -84,14 +84,13 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to read a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * 
 	 * @return  array    The xml response about a changeset
 	 *  
 	 * @since   12.3
 	 */
-	public function readChangeset($oauth, $id)
+	public function readChangeset($id)
 	{
 
 		// Set the API base
@@ -101,9 +100,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->changeset;
 
@@ -200,14 +197,13 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to download a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * 
 	 * @return  array	The xml response of requested changeset
 	 * 
 	 * @since   12.3
 	 */
-	public function downloadChangeset($oauth, $id)
+	public function downloadChangeset($id)
 	{
 
 		// Set the API base
@@ -217,9 +213,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->create;
 	}
@@ -283,14 +277,13 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to Query on changesets
 	 *  
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   string               $param  parameters for query
 	 * 
 	 * @return  array    The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function queryChangeset($oauth, $param)
+	public function queryChangeset($param)
 	{
 		// Set the API base
 		$base = 'changesets/' . $param;
@@ -299,9 +292,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET',  array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->osm;
 	}

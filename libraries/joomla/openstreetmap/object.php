@@ -34,6 +34,12 @@ abstract class JOpenstreetmapObject
 	protected $client;
 
 	/**
+	 * @var JOpenstreetmapOauth The OAuth client.
+	 * @since 12.3
+	 */
+	protected $oauth;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param   JRegistry  &$options  Openstreetmap options object.
@@ -97,5 +103,47 @@ abstract class JOpenstreetmapObject
 		$this->options->set($key, $value);
 
 		return $this;
+	}
+	
+	/**
+	 * Method to send the request which does not require authentication.
+	 *
+	 * @param   string  $path     The path of the request to make
+	 * @param   string  $method   The request method.
+	 * @param   array   $headers  The headers passed in the request.
+	 * @param   mixed   $data     Either an associative array or a string to be sent with the post request.
+	 *
+	 * @return  SimpleXMLElement  The XML response
+	 *
+	 * @since   12.3
+	 * @throws  DomainException
+	 */
+	public function sendRequest($path, $method='GET', $headers = array(), $data='')
+	{
+		// Send the request.
+		switch ($method)
+		{
+			case 'GET':
+				$response = $this->client->get($path, $headers);
+				break;
+			case 'POST':
+				$response = $this->client->post($path, $data, $headers);
+				break;
+		}
+	
+		if (strpos($response->body, 'redirected') !== false)
+		{
+			return $response->headers['Location'];
+		}
+
+		// Validate the response code.
+		if ($response->code != 200)
+		{
+			$error = htmlspecialchars($response->body);
+
+			throw new DomainException($error, $response->code);
+		}
+	
+		return simplexml_load_string($response->body);
 	}
 }

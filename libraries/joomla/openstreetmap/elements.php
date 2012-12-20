@@ -213,7 +213,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to read an Element [node|way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [node|way|relation]
 	 * @param   int                  $id       element identifier
 	 * 
@@ -221,7 +220,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function readElement($oauth, $element, $id)
+	public function readElement($element, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
@@ -235,9 +234,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->$element;
 	}
@@ -339,7 +336,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get history of an element [node|way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [node|way|relation]
 	 * @param   int                  $id       element identifier
 	 * 
@@ -347,7 +343,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function historyOfElement($oauth, $element, $id)
+	public function historyOfElement($element, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
@@ -361,9 +357,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->$element;
 	}
@@ -371,7 +365,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get details about a version of an element [node|way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [node|way|relation]
 	 * @param   int                  $id       element identifier
 	 * @param   int                  $version  element version
@@ -380,7 +373,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function versionOfElement($oauth, $element, $id ,$version)
+	public function versionOfElement($element, $id ,$version)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
@@ -394,9 +387,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->$element;
 	}
@@ -404,7 +395,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get data about multiple ids of an element [node|way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [nodes|ways|relations] - use plural word
 	 * @param   string               $params   Comma separated list ids belongto type $element
 	 * 
@@ -412,7 +402,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function multiFetchElements($oauth, $element, $params)
+	public function multiFetchElements($element, $params)
 	{
 		if ($element != 'nodes' && $element != 'ways' && $element != 'relations')
 		{
@@ -429,9 +419,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->$single_element;
 	}
@@ -439,7 +427,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get relations for an Element [node|way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [nodes|ways|relations]
 	 * @param   int                  $id       element identifier
 	 * 
@@ -447,7 +434,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function relationsForElement($oauth, $element, $id)
+	public function relationsForElement($element, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
@@ -461,9 +448,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->$element;
 	}
@@ -471,14 +456,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get ways for a Node element
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     node identifier
 	 * 
 	 * @return  array    The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function waysForNode($oauth, $id)
+	public function waysForNode($id)
 	{
 		// Set the API base
 		$base = 'node/' . $id . '/ways';
@@ -487,9 +471,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->way;
 	}
@@ -497,7 +479,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get full information about an element [way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [way|relation]
 	 * @param   int                  $id       identifier
 	 * 
@@ -505,7 +486,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function fullElement($oauth, $element, $id)
+	public function fullElement($element, $id)
 	{
 		if ($element != 'way' && $element != 'relation')
 		{
@@ -519,9 +500,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path);
 
 		return $xml_string->node;
 	}

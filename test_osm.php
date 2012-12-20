@@ -81,12 +81,12 @@ class OsmApp extends JApplicationWeb
 // 		$result=$element->createNode($oauth, '14153708', '5.5', '6.7', array("C"=>"Cat","D"=>"Dogs"));
 // 		print_r($result);
 		echo '$$$$<br />';
-// 		$result = $changeset -> readChangeset($oauth, '14153708');
-// 		print_r($result);
+ 		$result = $changeset -> readChangeset('14153708');
+ 		print_r($result);
 		echo '<br />';
 // 		$result=$element->readElement($oauth, 'node', '2050021859');
-// 		$result=$element->readElement($oauth, 'node', 123);
-// 		print_r($result);
+ 		$result=$element->readElement($oauth, 'node', 123);
+ 		print_r($result);
 		
 		//$result = $changeset ->updateChangeset($oauth, '1',$tags);
 		
@@ -97,8 +97,8 @@ class OsmApp extends JApplicationWeb
 // 		$result = $changeset ->expandBBoxChangeset($oauth,'1',$node_list);
 // 		print_r('DDDDPPPPP');
 		//print_r($new_token);
-		$result =$gps->downloadTraceMetadetails('1370260','bswije','buddhima');
-		print_r($result);
+// 		$result =$gps->downloadTraceMetadetails('1370260','bswije','buddhima');
+// 		print_r($result);
 
 	}
 }
