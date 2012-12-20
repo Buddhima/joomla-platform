@@ -22,16 +22,15 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to create a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth       object which contains oauth data	
 	 * @param   array                $changesets  array which contains changeset data
 	 * 
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function createChangeset($oauth, $changesets=array())
+	public function createChangeset($changesets=array())
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -75,7 +74,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		return $response->body;
 
@@ -109,7 +108,6 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to update a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * @param   array                $tags   array of tags to update
 	 * 
@@ -117,9 +115,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3 
 	 */
-	public function updateChangeset($oauth, $id, $tags=array() )
+	public function updateChangeset($id, $tags=array() )
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -155,7 +153,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		$xml_string = simplexml_load_string($response->body);
 
@@ -165,16 +163,15 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to close a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * 
 	 * @return  No value returns
 	 * 
 	 * @since   12.3
 	 */
-	public function closeChangeset($oauth, $id)
+	public function closeChangeset($id)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -190,7 +187,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$header['format'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $header);
 
 	}
 
@@ -221,7 +218,6 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to expand the bounding box of a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   int                  $id     identifier of the changeset
 	 * @param   array                $nodes  list of lat lon about nodes
 	 * 
@@ -229,9 +225,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function expandBBoxChangeset($oauth, $id, $nodes)
+	public function expandBBoxChangeset($id, $nodes)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -267,7 +263,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);
 
 		$xml_string = simplexml_load_string($response->body);
 
@@ -300,7 +296,6 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to upload a diff to a changeset
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
 	 * @param   string               $xml    diff data to upload
 	 * @param   int                  $id     identifier of the changeset
 	 * 
@@ -308,9 +303,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function diffUploadChangeset($oauth, $xml, $id)
+	public function diffUploadChangeset($xml, $id)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -326,7 +321,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'POST', $parameters, $xml, $header);
 
 		$xml_string = simplexml_load_string($response->body);
 

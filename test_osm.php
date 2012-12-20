@@ -37,7 +37,7 @@ class OsmApp extends JApplicationWeb
 // 		$oauth->setToken($new_token);
 		
 
-		$osm=new JOpenstreetmap();
+		$osm=new JOpenstreetmap($oauth);
 		$changeset= $osm ->changesets;
  		//$result = $changeset -> readChangeset($oauth, '14153877');
 		
@@ -55,7 +55,7 @@ class OsmApp extends JApplicationWeb
 // 				(
 // 						"A"=>"Apple",
 // 						"B"=>"Ball",
-// 						"c"=>"Call"
+// 						"c"=>"Call"JTwitterPlaces
 // 				),
 // 				array
 // 				(

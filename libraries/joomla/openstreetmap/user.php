@@ -21,16 +21,14 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 {
 	/**
 	 * Method to get user details
-	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
-	 * 
+	 *  
 	 * @return  array The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function getDetails($oauth)
+	public function getDetails()
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -44,7 +42,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', $parameters);
+		$response = $this->oauth->oauthRequest($path, 'GET', $parameters);
 
 		return $response->body;
 	}
@@ -52,15 +50,13 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to get preferences
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
-	 * 
 	 * @return  array The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function getPreferences($oauth)
+	public function getPreferences()
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -74,7 +70,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', $parameters);
+		$response = $this->oauth->oauthRequest($path, 'GET', $parameters);
 
 		return $response->body;
 	}
@@ -82,16 +78,15 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to replace user preferences
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth        object which contains oauth data
 	 * @param   array                $preferences  array of new preferences
 	 * 
 	 * @return  array The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function replacePreferences($oauth, $preferences)
+	public function replacePreferences($preferences)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -125,7 +120,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		return $response->body;
 	}
@@ -133,7 +128,6 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to change user preferences
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth       object which contains oauth data
 	 * @param   string               $key         key of the preference
 	 * @param   string               $preference  new value for preference
 	 * 
@@ -141,9 +135,9 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function changePreference($oauth, $key, $preference)
+	public function changePreference($key, $preference)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -157,7 +151,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $preference);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $preference);
 
 		return $response->body;
 	}

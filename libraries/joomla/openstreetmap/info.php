@@ -35,7 +35,7 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
+		$response = $this->oauth->oauthRequest($path, 'GET', array());
 
 		$xml_string = simplexml_load_string($response->body);
 
@@ -63,7 +63,7 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
+		$response = $this->oauth->oauthRequest($path, 'GET', array());
 
 		$xml_string = simplexml_load_string($response->body);
 
@@ -73,17 +73,15 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 	/**
 	 * Method to retrieve permissions for current user
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth  object which contains oauth data
-	 * 
 	 * @return  array The xml response
 	 * 
 	 * @since   12.3
 	 */
-	public function retrievePermissions($oauth=null)
+	public function retrievePermissions()
 	{
-		if ($oauth != null)
+		if ($this->oauth != null)
 		{
-			$token = $oauth->getToken();
+			$token = $this->oauth->getToken();
 		}
 
 		// Set the API base
@@ -93,7 +91,7 @@ class JOpenstreetmapInfo extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'GET', array());
+		$response = $this->oauth->oauthRequest($path, 'GET', array());
 
 		$xml_string = simplexml_load_string($response->body);
 

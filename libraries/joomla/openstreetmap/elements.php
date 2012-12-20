@@ -22,7 +22,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to create a node
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth      object which contains oauth data
 	 * @param   int                  $changeset  change set id
 	 * @param   float                $latitude   latitude of the node
 	 * @param   float                $longitude  longitude of the node
@@ -32,9 +31,9 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function createNode($oauth,$changeset,$latitude,$longitude,$tags)
+	public function createNode($changeset,$latitude,$longitude,$tags)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -68,7 +67,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		return $response->body;
 	}
@@ -76,7 +75,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to create a way
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth      object which contains oauth data
 	 * @param   int                  $changeset  change set id
 	 * @param   array                $tags       array of tags for a way
 	 * @param   array                $nds        node ids to refer
@@ -85,9 +83,9 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function createWay($oauth,$changeset,$tags,$nds)
+	public function createWay($changeset,$tags,$nds)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -132,7 +130,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		return $response->body;
 	}
@@ -140,7 +138,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to create a relation
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth      object which contains oauth data
 	 * @param   int                  $changeset  change set id
 	 * @param   array                $tags       array of tags for a relation
 	 * @param   array                $members    array of members for a relation 
@@ -150,9 +147,9 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function createRelation($oauth,$changeset,$tags,$members)
+	public function createRelation($changeset,$tags,$members)
 	{
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -205,7 +202,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		return $response->body;
 	}
@@ -242,7 +239,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to update an Element [node|way|relation]
 	 *
-	 * @param   JOpenstreetmapOauth  $oauth    object which contains oauth data
 	 * @param   string               $element  [node|way|relation]
 	 * @param   string               $xml      full reperentation of the element with a version number
 	 * @param   int                  $id       element identifier
@@ -251,14 +247,14 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function updateElement($oauth, $element, $xml, $id)
+	public function updateElement($element, $xml, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
 			return;
 		}
 
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -274,7 +270,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters, $xml, $header);
 
 		return $response->body;
 	}
@@ -282,7 +278,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to delete an element [node|way|relation]
 	 * 
-	 * @param   JOpenstreetmapOauth  $oauth      object which contains oauth data
 	 * @param   string               $element    [node|way|relation]
 	 * @param   int                  $id         element identifier
 	 * @param   int                  $version    element versioln
@@ -294,14 +289,14 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function deleteElement($oauth, $element, $id, $version, $changeset, $latitude=null, $longitude=null)
+	public function deleteElement($element, $id, $version, $changeset, $latitude=null, $longitude=null)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
 			return;
 		}
 
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -328,7 +323,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$header['Content-Type'] = 'text/xml';
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'DELETE', $parameters, $xml, $header);
+		$response = $this->oauth->oauthRequest($path, 'DELETE', $parameters, $xml, $header);
 
 		return $response->body;
 	}
@@ -508,7 +503,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method used by the DWG to hide old versions of elements containing data privacy or copyright infringements
 	 *  
-	 * @param   JOpenstreetmapOauth  $oauth         object which contains oauth data
 	 * @param   string               $element       [node|way|relation]
 	 * @param   int                  $id            element identifier
 	 * @param   int                  $version       element version
@@ -518,14 +512,14 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * 
 	 * @since   12.3
 	 */
-	public function redaction($oauth, $element, $id, $version, $redaction_id)
+	public function redaction($element, $id, $version, $redaction_id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
 			return;
 		}
 
-		$token = $oauth->getToken();
+		$token = $this->oauth->getToken();
 
 		// Set parameters.
 		$parameters = array(
@@ -539,7 +533,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $oauth->oauthRequest($path, 'PUT', $parameters);
+		$response = $this->oauth->oauthRequest($path, 'PUT', $parameters);
 
 		$xml_string = simplexml_load_string($response->body);
 
