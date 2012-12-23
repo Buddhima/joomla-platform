@@ -42,8 +42,9 @@ abstract class JOpenstreetmapObject
 	/**
 	 * Constructor.
 	 *
-	 * @param   JRegistry  &$options  Openstreetmap options object.
-	 * @param   JHttp      $client    The HTTP client object.
+	 * @param   JRegistry            &$options  Openstreetmap options object.
+	 * @param   JHttp                $client    The HTTP client object.
+	 * @param   JOpenstreetmapOauth  $oauth     Openstreetmap oauth client
 	 *
 	 * @since   12.3
 	 */
