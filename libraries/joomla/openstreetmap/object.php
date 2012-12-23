@@ -105,7 +105,7 @@ abstract class JOpenstreetmapObject
 
 		return $this;
 	}
-	
+
 	/**
 	 * Method to send the request which does not require authentication.
 	 *
@@ -131,7 +131,7 @@ abstract class JOpenstreetmapObject
 				$response = $this->client->post($path, $data, $headers);
 				break;
 		}
-	
+
 		if (strpos($response->body, 'redirected') !== false)
 		{
 			return $response->headers['Location'];
@@ -144,7 +144,7 @@ abstract class JOpenstreetmapObject
 
 			throw new DomainException($error, $response->code);
 		}
-	
+
 		return simplexml_load_string($response->body);
 	}
 }

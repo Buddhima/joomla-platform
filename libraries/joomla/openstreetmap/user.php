@@ -78,7 +78,7 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to replace user preferences
 	 * 
-	 * @param   array                $preferences  array of new preferences
+	 * @param   array  $preferences  array of new preferences
 	 * 
 	 * @return  array The xml response
 	 * 
@@ -128,8 +128,8 @@ class JOpenstreetmapUser extends JOpenstreetmapObject
 	/**
 	 * Method to change user preferences
 	 * 
-	 * @param   string               $key         key of the preference
-	 * @param   string               $preference  new value for preference
+	 * @param   string  $key         key of the preference
+	 * @param   string  $preference  new value for preference
 	 * 
 	 * @return  array The xml response
 	 * 

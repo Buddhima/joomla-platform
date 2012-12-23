@@ -32,7 +32,7 @@ class JOpenstreetmap
 	protected $client;
 
 	/**
-	 * @var JOpenstreetmapOauth The OAuth client.
+	 * @var   JOpenstreetmapOauth  The OAuth client.
 	 * @since 12.3
 	 */
 	protected $oauth;

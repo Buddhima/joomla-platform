@@ -22,9 +22,9 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to create a changeset
 	 * 
-	 * @param   array                $changesets  array which contains changeset data
+	 * @param   array  $changesets  array which contains changeset data
 	 * 
-	 * @return  array   The xml response
+	 * @return  array  The xml response
 	 * 
 	 * @since   12.3
 	 */
@@ -83,7 +83,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to read a changeset
 	 * 
-	 * @param   int                  $id     identifier of the changeset
+	 * @param   int  $id  identifier of the changeset
 	 * 
 	 * @return  array    The xml response about a changeset
 	 *  
@@ -108,8 +108,8 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to update a changeset
 	 * 
-	 * @param   int                  $id     identifier of the changeset
-	 * @param   array                $tags   array of tags to update
+	 * @param   int    $id    identifier of the changeset
+	 * @param   array  $tags  array of tags to update
 	 * 
 	 * @return  array    The xml response of updated changeset
 	 * 
@@ -163,7 +163,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to close a changeset
 	 * 
-	 * @param   int                  $id     identifier of the changeset
+	 * @param   int  $id  identifier of the changeset
 	 * 
 	 * @return  No value returns
 	 * 
@@ -194,7 +194,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to download a changeset
 	 * 
-	 * @param   int                  $id     identifier of the changeset
+	 * @param   int  $id  identifier of the changeset
 	 * 
 	 * @return  array	The xml response of requested changeset
 	 * 
@@ -218,8 +218,8 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to expand the bounding box of a changeset
 	 * 
-	 * @param   int                  $id     identifier of the changeset
-	 * @param   array                $nodes  list of lat lon about nodes
+	 * @param   int    $id     identifier of the changeset
+	 * @param   array  $nodes  list of lat lon about nodes
 	 * 
 	 * @return  array    The xml response of changed changeset
 	 * 
@@ -273,7 +273,7 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to Query on changesets
 	 *  
-	 * @param   string               $param  parameters for query
+	 * @param   string  $param  parameters for query
 	 * 
 	 * @return  array    The xml response
 	 * 
@@ -296,8 +296,8 @@ class JOpenstreetmapChangesets extends JOpenstreetmapObject
 	/**
 	 * Method to upload a diff to a changeset
 	 * 
-	 * @param   string               $xml    diff data to upload
-	 * @param   int                  $id     identifier of the changeset
+	 * @param   string  $xml  diff data to upload
+	 * @param   int     $id   identifier of the changeset
 	 * 
 	 * @return  array    The xml response of result
 	 * 
