@@ -32,6 +32,12 @@ class JOpenstreetmap
 	protected $client;
 
 	/**
+	 * @var JOpenstreetmapOauth The OAuth client.
+	 * @since 12.3
+	 */
+	protected $oauth;
+
+	/**
 	 * @var    JOpenstreetmapChangesets  Openstreetmap API object for changesets.
 	 * @since  12.3
 	 */
@@ -69,8 +75,9 @@ class JOpenstreetmap
 	 *
 	 * @since   12.3
 	 */
-	public function __construct(JRegistry $options = null, JHttp $client = null)
+	public function __construct(JOpenstreetmapOauth $oauth = null, JRegistry $options = null, JHttp $client = null)
 	{
+		$this->oauth = $oauth;
 		$this->options = isset($options) ? $options : new JRegistry;
 		$this->client  = isset($client) ? $client : new JHttp($this->options);
 
