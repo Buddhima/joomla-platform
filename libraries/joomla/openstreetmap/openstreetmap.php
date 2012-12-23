@@ -94,7 +94,7 @@ class JOpenstreetmap
 	 *
 	 * @return  JOpenstreetmapObject  Openstreetmap API object .
 	 *
-	 * @since   12.3
+	 * @since   12.3a
 	 */
 	public function __get($name)
 	{
