@@ -150,7 +150,7 @@ class JOpenstreetmap
 	{
 		return $this->options->get($key);
 	}
-
+ 
 	/**
 	 * Set an option for the Openstreetmap instance.
 	 *
