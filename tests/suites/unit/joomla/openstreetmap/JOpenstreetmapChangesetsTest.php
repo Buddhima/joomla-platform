@@ -73,7 +73,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0';
 		$_SERVER['REQUEST_URI'] = '/index.php';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
-		
+
 		$key = "app_key";
 		$secret = "app_secret";
 			
@@ -113,14 +113,15 @@ class JOpenstreetmapChangesetsTest extends TestCase
 						"A"=>"Apple",
 						"F"=>"Apple",
 						"B"=>"Ball"
-				) 
+				)
 		);
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleString;
 
-		$path = 'http://api.openstreetmap.org/api/0.6/changeset/create';
+// 		$path = 'http://api.openstreetmap.org/api/0.6/changeset/create';
+		$path = 'changeset/create';
 
 		$this->client->expects($this->once())
 		->method('put')
@@ -128,8 +129,8 @@ class JOpenstreetmapChangesetsTest extends TestCase
 		->will($this->returnValue($returnData));
 
 		$this->assertThat(
-			$this->object->createChangeset($changeset),
-			$this->equalTo($this->sampleString)
+				$this->object->createChangeset($changeset),
+				$this->equalTo($this->sampleString)
 		);
 	}
 
@@ -137,6 +138,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * Tests the createChangeset method - failure
 	 *
 	 * @return  void
+	 *
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
@@ -155,14 +157,14 @@ class JOpenstreetmapChangesetsTest extends TestCase
 						"A"=>"Apple",
 						"F"=>"Apple",
 						"B"=>"Ball"
-				) 
+				)
 		);
 
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
 
-		$path = 'http://api.openstreetmap.org/api/0.6/changeset/create';
+		$path = 'changeset/create';
 
 		$this->client->expects($this->once())
 		->method('put')
@@ -171,7 +173,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 
 		$this->object->createChangeset($changeset);
 	}
-	
+
 	/**
 	 * Tests the readChangeset method
 	 *
@@ -182,21 +184,21 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	public function testReadChangeset()
 	{
 		$id = '14153708';
-	
+
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleString;
-	
-		$path = 'http://api.openstreetmap.org/api/0.6/changeset/'.$id;
-	
+
+		$path = 'changeset/'.$id;
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->readChangeset($id),
-				$this->equalTo($this->sampleString)
+				$this->equalTo(new SimpleXMLElement(''))
 		);
 	}
 }
