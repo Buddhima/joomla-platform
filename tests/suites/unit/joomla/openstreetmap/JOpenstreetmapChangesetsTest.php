@@ -201,4 +201,374 @@ class JOpenstreetmapChangesetsTest extends TestCase
 				$this->equalTo(new SimpleXMLElement(''))
 		);
 	}
+	
+	/**
+	 * Tests the readChangeset method - failure
+	 *
+	 * @return  void
+	 *
+	 * @since   12.3
+	 */
+	public function testReadChangesetFailure()
+	{
+		$id = '14153708';
+	
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/'.$id;
+	
+		$this->client->expects($this->once())
+		->method('get')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->object->readChangeset($id);
+	}
+	
+	/**
+	 * Tests the updateChangeset method
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testUpdateChangeset()
+	{
+		$id = '14153708';
+		$tags = array
+				(
+						"comment"=>"my changeset comment",
+						"created_by"=>"JOsm (en)"
+				);
+	
+		$returnData = new stdClass;
+		$returnData->code = 200;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id;
+	
+		$this->client->expects($this->once())
+		->method('put')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->assertThat(
+				$this->object->updateChangeset($id,$tags),
+				$this->equalTo(new SimpleXMLElement(''))
+		);
+	}
+	
+	/**
+	 * Tests the updateChangeset method - failure
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testUpdateChangesetFailure()
+	{
+		$id = '14153708';
+		$tags = array
+		(
+				"comment"=>"my changeset comment",
+				"created_by"=>"JOsm (en)"
+		);
+	
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id;
+	
+		$this->client->expects($this->once())
+		->method('put')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->object->updateChangeset($id,$tags);
+	}
+	
+	/**
+	 * Tests the closeChangeset method
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testCloseChangeset()
+	{
+		$id = '14153708';
+			
+		$returnData = new stdClass;
+		$returnData->code = 200;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/close';
+	
+		$this->client->expects($this->once())
+		->method('put')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->assertThat(
+				$this->object->closeChangeset($id),
+				$this->equalTo(new SimpleXMLElement(''))
+		);
+	}
+	
+	/**
+	 * Tests the closeChangeset method - failure
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testCloseChangesetFailure()
+	{
+		$id = '14153708';
+	
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/close';
+	
+		$this->client->expects($this->once())
+		->method('put')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->object->closeChangeset($id);
+	}
+
+	/**
+	 * Tests the downloadChangeset method
+	 *
+	 * @return  void
+	 *
+	 * @since   12.3
+	 */
+	public function testDownloadChangeset()
+	{
+		$id = '123';
+	
+		$returnData = new stdClass;
+		$returnData->code = 200;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/'.$id . '/download';
+	
+		$this->client->expects($this->once())
+		->method('get')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->assertThat(
+				$this->object->downloadChangeset($id),
+				$this->equalTo(new SimpleXMLElement(''))
+		);
+	}
+
+	/**
+	 * Tests the downloadChangeset method - failure
+	 *
+	 * @return  void
+	 *
+	 * @since   12.3
+	 */
+	public function testDownloadChangesetFailure()
+	{
+		$id = '123';
+	
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/download';
+	
+		$this->client->expects($this->once())
+		->method('get')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->object->downloadChangeset($id);
+	}
+
+	/**
+	 * Tests the expandBBoxChangeset method
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testExpandBBoxChangeset()
+	{
+		$id = '14153708';
+		$node_list=array(array(4,5),array(6,7));
+			
+		$returnData = new stdClass;
+		$returnData->code = 200;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/expand_bbox';
+	
+		$this->client->expects($this->once())
+		->method('post')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->assertThat(
+				$this->object->expandBBoxChangeset($id, $node_list),
+				$this->equalTo(new SimpleXMLElement(''))
+		);
+	}
+	
+	/**
+	 * Tests the expandBBoxChangeset method - failure
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testExpandBBoxChangesetFailure()
+	{
+		$id = '14153708';
+		$node_list=array(array(4,5),array(6,7));
+	
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/expand_bbox';
+	
+		$this->client->expects($this->once())
+		->method('put')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->object->expandBBoxChangeset($id, $node_list);
+	}
+
+	/**
+	 * Tests the queryChangeset method
+	 *
+	 * @return  void
+	 *
+	 * @since   12.3
+	 */
+	public function testQueryChangeset()
+	{
+		$param = 'open';
+
+		$returnData = new stdClass;
+		$returnData->code = 200;
+		$returnData->body = $this->sampleString;
+
+		$path = 'changesets/'.$param;
+
+		$this->client->expects($this->once())
+		->method('get')
+		->with($path)
+		->will($this->returnValue($returnData));
+
+		$this->assertThat(
+				$this->object->queryChangeset($param),
+				$this->equalTo(new SimpleXMLElement(''))
+		);
+	}
+
+	/**
+	 * Tests the queryChangeset method - failure
+	 *
+	 * @return  void
+	 *
+	 * @since   12.3
+	 */
+	public function testQueryChangesetFailure()
+	{
+		$param = 'open';
+
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+
+		$path = 'changesets/'.$param;
+
+		$this->client->expects($this->once())
+		->method('get')
+		->with($path)
+		->will($this->returnValue($returnData));
+
+		$this->object->queryChangeset($param);
+	}
+
+	/**
+	 * Tests the diffUploadChangeset method
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testDiffUploadChangeset()
+	{
+		$id = '123';
+		$xml = '<osmChange>
+					<modify>
+						<node id="12" timestamp="2007-01-02T00:00:00.0+11:00" lat="-33.9133118622908" lon="151.117335519304">
+							<tag k="created_by" v="JOsm"/>
+						</node>
+					</modify>
+				</osmChange>';
+	
+		$returnData = new stdClass;
+		$returnData->code = 200;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/upload';
+	
+		$this->client->expects($this->once())
+		->method('post')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->assertThat(
+				$this->object->diffUploadChangeset($xml, $id),
+				$this->equalTo(new SimpleXMLElement(''))
+		);
+	}
+	
+	/**
+	 * Tests the diffUploadChangeset method - failure
+	 *
+	 * @return  array
+	 *
+	 * @since   12.3
+	 */
+	public function testDiffUploadChangesetFailure()
+	{
+		$id = '123';
+		$xml = '<osmChange>
+					<modify>
+						<node id="12" timestamp="2007-01-02T00:00:00.0+11:00" lat="-33.9133118622908" lon="151.117335519304">
+							<tag k="created_by" v="JOsm"/>
+						</node>
+					</modify>
+				</osmChange>';
+	
+		$returnData = new stdClass;
+		$returnData->code = 500;
+		$returnData->body = $this->sampleString;
+	
+		$path = 'changeset/' . $id . '/upload';
+	
+		$this->client->expects($this->once())
+		->method('post')
+		->with($path)
+		->will($this->returnValue($returnData));
+	
+		$this->object->diffUploadChangeset($id,$tags);
+	}
+
 }
