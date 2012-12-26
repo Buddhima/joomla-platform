@@ -48,16 +48,23 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	protected $oauth;
 
 	/**
-	 * @var    string  Sample JSON string.
+	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleString = '<osm><changeset></changeset></osm>';
+	protected $sampleXml=<<<XML
+<?xml version='1.0'?>
+<osm></osm>
+XML;
+	
 
 	/**
-	 * @var    string  Sample JSON error message.
+	 * @var    string  Sample XML error message.
 	 * @since  12.3
 	 */
-	protected $errorString = '{"error":"Generic error"}';
+	protected $errorString = <<<XML
+<?xml version='1.0'?>
+<osm>ERROR</osm>
+XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -106,19 +113,18 @@ class JOpenstreetmapChangesetsTest extends TestCase
 				array
 				(
 						"comment"=>"my changeset comment",
-						"created_by"=>"JOSM/1.0 (5581 en)"
+						"created_by"=>"Josm"
 				),
 				array
 				(
 						"A"=>"Apple",
-						"F"=>"Apple",
 						"B"=>"Ball"
 				)
 		);
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 // 		$path = 'http://api.openstreetmap.org/api/0.6/changeset/create';
 		$path = 'changeset/create';
@@ -130,7 +136,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 
 		$this->assertThat(
 				$this->object->createChangeset($changeset),
-				$this->equalTo($this->sampleString)
+				$this->equalTo($this->sampleXml)
 		);
 	}
 
@@ -138,7 +144,6 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * Tests the createChangeset method - failure
 	 *
 	 * @return  void
-	 *
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
@@ -150,12 +155,11 @@ class JOpenstreetmapChangesetsTest extends TestCase
 				array
 				(
 						"comment"=>"my changeset comment",
-						"created_by"=>"JOSM/1.0 (5581 en)"
+						"created_by"=>"JOsm"
 				),
 				array
 				(
 						"A"=>"Apple",
-						"F"=>"Apple",
 						"B"=>"Ball"
 				)
 		);
@@ -187,7 +191,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 		$path = 'changeset/'.$id;
 
@@ -195,10 +199,10 @@ class JOpenstreetmapChangesetsTest extends TestCase
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-
+	
 		$this->assertThat(
 				$this->object->readChangeset($id),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 	
@@ -208,6 +212,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testReadChangesetFailure()
 	{
@@ -215,7 +220,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 	
 		$path = 'changeset/'.$id;
 	
@@ -245,7 +250,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'changeset/' . $id;
 	
@@ -256,7 +261,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->updateChangeset($id,$tags),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 	
@@ -266,6 +271,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  array
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testUpdateChangesetFailure()
 	{
@@ -278,7 +284,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 	
 		$path = 'changeset/' . $id;
 	
@@ -303,7 +309,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 			
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'changeset/' . $id . '/close';
 	
@@ -312,10 +318,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 		->with($path)
 		->will($this->returnValue($returnData));
 	
-		$this->assertThat(
-				$this->object->closeChangeset($id),
-				$this->equalTo(new SimpleXMLElement(''))
-		);
+		$this->assertNull($this->object->closeChangeset($id));
 	}
 	
 	/**
@@ -324,6 +327,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  array
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testCloseChangesetFailure()
 	{
@@ -331,7 +335,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 	
 		$path = 'changeset/' . $id . '/close';
 	
@@ -356,7 +360,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'changeset/'.$id . '/download';
 	
@@ -367,7 +371,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->downloadChangeset($id),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -377,6 +381,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testDownloadChangesetFailure()
 	{
@@ -384,7 +389,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 	
 		$path = 'changeset/' . $id . '/download';
 	
@@ -410,7 +415,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 			
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'changeset/' . $id . '/expand_bbox';
 	
@@ -421,7 +426,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->expandBBoxChangeset($id, $node_list),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 	
@@ -431,6 +436,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  array
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testExpandBBoxChangesetFailure()
 	{
@@ -439,12 +445,12 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 	
 		$path = 'changeset/' . $id . '/expand_bbox';
 	
 		$this->client->expects($this->once())
-		->method('put')
+		->method('post')
 		->with($path)
 		->will($this->returnValue($returnData));
 	
@@ -464,7 +470,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 		$path = 'changesets/'.$param;
 
@@ -475,7 +481,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 
 		$this->assertThat(
 				$this->object->queryChangeset($param),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -485,6 +491,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testQueryChangesetFailure()
 	{
@@ -492,7 +499,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 
 		$path = 'changesets/'.$param;
 
@@ -516,7 +523,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 		$id = '123';
 		$xml = '<osmChange>
 					<modify>
-						<node id="12" timestamp="2007-01-02T00:00:00.0+11:00" lat="-33.9133118622908" lon="151.117335519304">
+						<node id="12" timestamp="2012-12-02T00:00:00.0+11:00" lat="-33.9133118622908" lon="151.117335519304">
 							<tag k="created_by" v="JOsm"/>
 						</node>
 					</modify>
@@ -524,7 +531,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'changeset/' . $id . '/upload';
 	
@@ -535,7 +542,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->diffUploadChangeset($xml, $id),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 	
@@ -545,6 +552,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	 * @return  array
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testDiffUploadChangesetFailure()
 	{
@@ -559,7 +567,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 500;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->errorString;
 	
 		$path = 'changeset/' . $id . '/upload';
 	
@@ -568,7 +576,7 @@ class JOpenstreetmapChangesetsTest extends TestCase
 		->with($path)
 		->will($this->returnValue($returnData));
 	
-		$this->object->diffUploadChangeset($id,$tags);
+		$this->object->diffUploadChangeset($xml, $id);
 	}
 
 }
