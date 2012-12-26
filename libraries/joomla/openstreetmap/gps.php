@@ -35,7 +35,7 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 	public function retrieveGps($left,$bottom,$right,$top,$page=0)
 	{
 		// Set the API base
-		$base = 'trackpoints?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top . '&page=' . $pageNumber;
+		$base = 'trackpoints?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top . '&page=' . $page;
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
