@@ -146,6 +146,6 @@ abstract class JOpenstreetmapObject
 			throw new DomainException($error, $response->code);
 		}
 
-		return simplexml_load_string($response->body);
+		return $response;
 	}
 }

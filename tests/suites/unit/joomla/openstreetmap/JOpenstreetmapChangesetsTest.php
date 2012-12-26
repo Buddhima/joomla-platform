@@ -55,7 +55,6 @@ class JOpenstreetmapChangesetsTest extends TestCase
 <?xml version='1.0'?>
 <osm></osm>
 XML;
-	
 
 	/**
 	 * @var    string  Sample XML error message.
@@ -192,6 +191,7 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
+		$returnData->changeset = new SimpleXMLElement($this->sampleXml);
 
 		$path = 'changeset/'.$id;
 
@@ -221,6 +221,7 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
+		$returnData->changeset = new SimpleXMLElement($this->sampleXml);
 	
 		$path = 'changeset/'.$id;
 	
@@ -361,6 +362,7 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
+		$returnData->create = new SimpleXMLElement($this->sampleXml);
 	
 		$path = 'changeset/'.$id . '/download';
 	
@@ -390,6 +392,7 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
+		$returnData->create = new SimpleXMLElement($this->sampleXml);
 	
 		$path = 'changeset/' . $id . '/download';
 	
@@ -471,6 +474,7 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
+		$returnData->osm = new SimpleXMLElement($this->sampleXml);
 
 		$path = 'changesets/'.$param;
 
@@ -500,6 +504,7 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
+		$returnData->osm = new SimpleXMLElement($this->sampleXml);
 
 		$path = 'changesets/'.$param;
 

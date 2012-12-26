@@ -48,16 +48,22 @@ class JOpenstreetmapGpsTest extends TestCase
 	protected $oauth;
 
 	/**
-	 * @var    string  Sample JSON string.
+	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleString = '<osm><changeset></changeset></osm>';
+	protected $sampleXml=<<<XML
+<?xml version='1.0'?>
+<osm></osm>
+XML;
 
 	/**
-	 * @var    string  Sample JSON error message.
+	 * @var    string  Sample XML error message.
 	 * @since  12.3
 	 */
-	protected $errorString = '{"error":"Generic error"}';
+	protected $errorString = <<<XML
+<?xml version='1.0'?>
+<osm>ERROR</osm>
+XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -109,7 +115,7 @@ class JOpenstreetmapGpsTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'trackpoints?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top . '&page=' . $page;
 	
@@ -120,7 +126,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->retrieveGps($left,$bottom,$right,$top,$page),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -130,6 +136,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testRetrieveGpsFailure()
 	{
@@ -173,7 +180,7 @@ class JOpenstreetmapGpsTest extends TestCase
 		
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 		$path = 'gpx/create';
 
@@ -184,7 +191,7 @@ class JOpenstreetmapGpsTest extends TestCase
 
 		$this->assertThat(
 				$this->object->uploadTrace($file, $description, $tags, $public, $visibility, $username, $password),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo($returnData)
 		);
 	}
 
@@ -194,6 +201,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testUploadTraceFailure()
 	{
@@ -236,7 +244,7 @@ class JOpenstreetmapGpsTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 		$path = 'gpx/' . $id . '/details';
 
@@ -247,7 +255,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->downloadTraceMetadetails($id, $username, $password),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -257,6 +265,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testDownloadTraceMetadetailsFailure()
 	{
@@ -295,7 +304,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'gpx/' . $id . '/data';
 	
@@ -306,7 +315,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->downloadTraceMetadata($id, $username, $password),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 	
@@ -316,6 +325,7 @@ class JOpenstreetmapGpsTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testDownloadTraceMetadataFailure()
 	{
@@ -327,14 +337,14 @@ class JOpenstreetmapGpsTest extends TestCase
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
-	
+
 		$path = 'gpx/' . $id . '/data';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->object->downloadTraceMetadata($id, $username, $password);
 	}
 }
