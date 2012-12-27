@@ -48,7 +48,7 @@ abstract class JOpenstreetmapObject
 	 *
 	 * @since   12.3
 	 */
-	public function __construct(JRegistry &$options = null, JHttp $client = null, $oauth = null)
+	public function __construct(JRegistry &$options = null, JHttp $client = null, JOpenstreetmapOauth $oauth = null)
 	{
 		$this->options = isset($options) ? $options : new JRegistry;
 		$this->client = isset($client) ? $client : new JHttp($this->options);
