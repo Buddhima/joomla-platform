@@ -93,7 +93,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 
 		// Set the API base
-		$base = 'node/create';
+		$base = 'way/create';
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -157,7 +157,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 		);
 
 		// Set the API base
-		$base = 'node/create';
+		$base = 'relation/create';
 
 		// Build the request path.
 		$path = $this->getOption('api.url') . $base;
@@ -178,7 +178,7 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 
 		if (!empty($members))
 		{
-			foreach ($tags as $member)
+			foreach ($members as $member)
 			{
 				if ($member['type'] == "node")
 				{
@@ -537,6 +537,6 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 
 		$xml_string = simplexml_load_string($response->body);
 
-		return $xml_string->node;
+		return $xml_string;
 	}
 }
