@@ -48,16 +48,22 @@ class JOpenstreetmapInfoTest extends TestCase
 	protected $oauth;
 
 	/**
-	 * @var    string  Sample JSON string.
+	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleString = '<osm><changeset></changeset></osm>';
+	protected $sampleXml=<<<XML
+<?xml version='1.0'?>
+<osm></osm>
+XML;
 
 	/**
-	 * @var    string  Sample JSON error message.
+	 * @var    string  Sample XML error message.
 	 * @since  12.3
 	 */
-	protected $errorString = '{"error":"Generic error"}';
+	protected $errorString = <<<XML
+<?xml version='1.0'?>
+<osm>ERROR</osm>
+XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -103,7 +109,7 @@ class JOpenstreetmapInfoTest extends TestCase
 	{
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 		$path = 'capabilities';
 
@@ -114,7 +120,7 @@ class JOpenstreetmapInfoTest extends TestCase
 
 		$this->assertThat(
 				$this->object->getCapabilities(),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -124,6 +130,7 @@ class JOpenstreetmapInfoTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testGetCapabilitiesFailure()
 	{
@@ -157,7 +164,7 @@ class JOpenstreetmapInfoTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 	
 		$path = 'map?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top;
 	
@@ -168,7 +175,7 @@ class JOpenstreetmapInfoTest extends TestCase
 	
 		$this->assertThat(
 				$this->object->retrieveMapData($left, $bottom, $right, $top),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -178,6 +185,7 @@ class JOpenstreetmapInfoTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testRetrieveMapDataFailure()
 	{
@@ -212,7 +220,7 @@ class JOpenstreetmapInfoTest extends TestCase
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
-		$returnData->body = $this->sampleString;
+		$returnData->body = $this->sampleXml;
 
 		$path = 'permissions';
 
@@ -223,7 +231,7 @@ class JOpenstreetmapInfoTest extends TestCase
 
 		$this->assertThat(
 				$this->object->retrievePermissions(),
-				$this->equalTo(new SimpleXMLElement(''))
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 
@@ -233,6 +241,7 @@ class JOpenstreetmapInfoTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @expectedException DomainException
 	 */
 	public function testRetrievePermissionsFailure()
 	{
