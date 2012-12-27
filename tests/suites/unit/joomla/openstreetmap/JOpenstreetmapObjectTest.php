@@ -77,8 +77,8 @@ class JOpenstreetmapObjectTest extends TestCase
 		$this->object->setOption('api.url', 'https://example.com/settest');
 
 		$this->assertThat(
-			$this->options->get('api.url'),
-			$this->equalTo('https://example.com/settest')
+				$this->options->get('api.url'),
+				$this->equalTo('https://example.com/settest')
 		);
 	}
 

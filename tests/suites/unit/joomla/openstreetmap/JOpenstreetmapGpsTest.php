@@ -51,15 +51,15 @@ class JOpenstreetmapGpsTest extends TestCase
 	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleXml=<<<XML
+	protected $sampleXml = <<<XML
 <?xml version='1.0'?>
 <osm></osm>
 XML;
 
 	/**
 	 * @var    string  Sample XML error message.
-	 * @since  12.3
-	 */
+	* @since  12.3
+	*/
 	protected $errorString = <<<XML
 <?xml version='1.0'?>
 <osm>ERROR</osm>
@@ -67,12 +67,12 @@ XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
+	* This method is called before a test is executed.
+	*
+	* @access protected
+	*
+	* @return void
+	*/
 	protected function setUp()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
@@ -82,7 +82,7 @@ XML;
 
 		$key = "app_key";
 		$secret = "app_secret";
-			
+
 		$access_token = array('key' => 'token_key', 'secret' => 'token_secret');
 
 		$this->options = new JRegistry;
@@ -116,16 +116,16 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = 'trackpoints?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top . '&page=' . $page;
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
-				$this->object->retrieveGps($left,$bottom,$right,$top,$page),
+				$this->object->retrieveGps($left, $bottom, $right, $top, $page),
 				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
@@ -157,7 +157,7 @@ XML;
 		->with($path)
 		->will($this->returnValue($returnData));
 
-		$this->object->retrieveGps($left,$bottom,$right,$top,$page);
+		$this->object->retrieveGps($left, $bottom, $right, $top, $page);
 	}
 
 	/**
@@ -177,7 +177,7 @@ XML;
 		$visibility = '1';
 		$username = 'username';
 		$password = 'password';
-		
+
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
@@ -237,7 +237,7 @@ XML;
 	 */
 	public function testDownloadTraceMetadetails()
 	{
-	
+
 		$id = '123';
 		$username = 'username';
 		$password = 'password';
@@ -252,7 +252,7 @@ XML;
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->downloadTraceMetadetails($id, $username, $password),
 				$this->equalTo(new SimpleXMLElement($this->sampleXml))
@@ -301,24 +301,24 @@ XML;
 		$id = '123';
 		$username = 'username';
 		$password = 'password';
-	
+
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = 'gpx/' . $id . '/data';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->downloadTraceMetadata($id, $username, $password),
 				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
-	
+
 	/**
 	 * Tests the downloadTraceMetadata method - failure
 	 *
@@ -329,11 +329,11 @@ XML;
 	 */
 	public function testDownloadTraceMetadataFailure()
 	{
-	
+
 		$id = '123';
 		$username = 'username';
 		$password = 'password';
-	
+
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;

@@ -33,7 +33,7 @@ class JOpenstreetmapTest extends TestCase
 	 * @since  12.3
 	 */
 	protected $object;
-	
+
 	/**
 	 * @var JOpenstreetmapOAuth OAuth 1 client
 	 * @since 12.3
@@ -52,7 +52,7 @@ class JOpenstreetmapTest extends TestCase
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0';
 		$_SERVER['REQUEST_URI'] = '/index.php';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
-		
+
 		$this->options = new JRegistry;
 		$this->client = $this->getMock('JHttp', array('get', 'post', 'delete', 'put'));
 
@@ -79,8 +79,8 @@ class JOpenstreetmapTest extends TestCase
 	public function test__GetChangesets()
 	{
 		$this->assertThat(
-			$this->object->changesets,
-			$this->isInstanceOf('JOpenstreetmapChangesets')
+				$this->object->changesets,
+				$this->isInstanceOf('JOpenstreetmapChangesets')
 		);
 	}
 
@@ -94,8 +94,8 @@ class JOpenstreetmapTest extends TestCase
 	public function test__GetElements()
 	{
 		$this->assertThat(
-			$this->object->elements,
-			$this->isInstanceOf('JOpenstreetmapElements')
+				$this->object->elements,
+				$this->isInstanceOf('JOpenstreetmapElements')
 		);
 	}
 
@@ -109,8 +109,8 @@ class JOpenstreetmapTest extends TestCase
 	public function test__GetGps()
 	{
 		$this->assertThat(
-			$this->object->gps,
-			$this->isInstanceOf('JOpenstreetmapGps')
+				$this->object->gps,
+				$this->isInstanceOf('JOpenstreetmapGps')
 		);
 	}
 
@@ -139,8 +139,8 @@ class JOpenstreetmapTest extends TestCase
 	public function test__GetUser()
 	{
 		$this->assertThat(
-			$this->object->user,
-			$this->isInstanceOf('JOpenstreetmapUser')
+				$this->object->user,
+				$this->isInstanceOf('JOpenstreetmapUser')
 		);
 	}
 
@@ -171,8 +171,8 @@ class JOpenstreetmapTest extends TestCase
 		$this->object->setOption('api.url', 'https://example.com/settest');
 
 		$this->assertThat(
-			$this->options->get('api.url'),
-			$this->equalTo('https://example.com/settest')
+				$this->options->get('api.url'),
+				$this->equalTo('https://example.com/settest')
 		);
 	}
 
@@ -188,8 +188,8 @@ class JOpenstreetmapTest extends TestCase
 		$this->options->set('api.url', 'https://example.com/gettest');
 
 		$this->assertThat(
-			$this->object->getOption('api.url', 'https://example.com/gettest'),
-			$this->equalTo('https://example.com/gettest')
+				$this->object->getOption('api.url', 'https://example.com/gettest'),
+				$this->equalTo('https://example.com/gettest')
 		);
 	}
 }

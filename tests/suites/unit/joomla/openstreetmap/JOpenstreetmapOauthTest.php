@@ -41,18 +41,6 @@ class JOpenstreetmapOauthTest extends TestCase
 	protected $oauth;
 
 	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"errorCode":401, "message": "Generic error"}';
-
-	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 *
@@ -91,18 +79,18 @@ class JOpenstreetmapOauthTest extends TestCase
 	}
 
 	/**
-	* Provides test data for request format detection.
-	*
-	* @return array
-	*
-	* @since 12.3
-	*/
+	 * Provides test data for request format detection.
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
 	public function seedVerifyCredentials()
 	{
 		// Code, body, expected
 		return array(
-			array(200, $this->sampleString, true)
-			);
+				array(200, $this->sampleString, true)
+		);
 	}
 
 	/**
@@ -125,8 +113,8 @@ class JOpenstreetmapOauthTest extends TestCase
 		$returnData->body = $body;
 
 		$this->assertThat(
-			$this->oauth->verifyCredentials(),
-			$this->equalTo($expected)
+				$this->oauth->verifyCredentials(),
+				$this->equalTo($expected)
 		);
 	}
 }

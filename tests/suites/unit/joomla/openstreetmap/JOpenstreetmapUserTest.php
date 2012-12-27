@@ -51,15 +51,15 @@ class JOpenstreetmapUserTest extends TestCase
 	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleXml=<<<XML
+	protected $sampleXml = <<<XML
 <?xml version='1.0'?>
 <osm></osm>
 XML;
 
 	/**
 	 * @var    string  Sample XML error message.
-	 * @since  12.3
-	 */
+	* @since  12.3
+	*/
 	protected $errorString = <<<XML
 <?xml version='1.0'?>
 <osm>ERROR</osm>
@@ -67,12 +67,12 @@ XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
+	* This method is called before a test is executed.
+	*
+	* @access protected
+	*
+	* @return void
+	*/
 	protected function setUp()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
@@ -82,7 +82,7 @@ XML;
 
 		$key = "app_key";
 		$secret = "app_secret";
-			
+
 		$access_token = array('key' => 'token_key', 'secret' => 'token_secret');
 
 		$this->options = new JRegistry;
@@ -137,14 +137,14 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
-	
+
 		$path = 'user/details';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->object->getDetails();
 	}
 
@@ -161,14 +161,14 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = 'user/preferences';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->getPreferences(),
 				$this->equalTo($this->sampleXml)
@@ -210,7 +210,7 @@ XML;
 	public function testReplacePreferences()
 	{
 
-		$preferences = array("A"=>"a");
+		$preferences = array("A" => "a");
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
@@ -240,7 +240,7 @@ XML;
 	public function testReplacePreferencesFailure()
 	{
 
-		$preferences = array("A"=>"a");
+		$preferences = array("A" => "a");
 
 		$returnData = new stdClass;
 		$returnData->code = 500;
@@ -285,7 +285,7 @@ XML;
 				$this->equalTo($this->sampleXml)
 		);
 	}
-	
+
 	/**
 	 * Tests the changePreference method - failure
 	 *

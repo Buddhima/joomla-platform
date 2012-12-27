@@ -51,15 +51,15 @@ class JOpenstreetmapInfoTest extends TestCase
 	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleXml=<<<XML
+	protected $sampleXml = <<<XML
 <?xml version='1.0'?>
 <osm></osm>
 XML;
 
 	/**
 	 * @var    string  Sample XML error message.
-	 * @since  12.3
-	 */
+	* @since  12.3
+	*/
 	protected $errorString = <<<XML
 <?xml version='1.0'?>
 <osm>ERROR</osm>
@@ -67,12 +67,12 @@ XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
+	* This method is called before a test is executed.
+	*
+	* @access protected
+	*
+	* @return void
+	*/
 	protected function setUp()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
@@ -82,7 +82,7 @@ XML;
 
 		$key = "app_key";
 		$secret = "app_secret";
-			
+
 		$access_token = array('key' => 'token_key', 'secret' => 'token_secret');
 
 		$this->options = new JRegistry;
@@ -137,14 +137,14 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
-	
+
 		$path = 'capabilities';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->object->getCapabilities();
 	}
 
@@ -165,14 +165,14 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = 'map?bbox=' . $left . ',' . $bottom . ',' . $right . ',' . $top;
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->retrieveMapData($left, $bottom, $right, $top),
 				$this->equalTo(new SimpleXMLElement($this->sampleXml))

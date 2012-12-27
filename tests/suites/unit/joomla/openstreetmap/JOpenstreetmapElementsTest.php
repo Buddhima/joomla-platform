@@ -51,7 +51,7 @@ class JOpenstreetmapElementsTest extends TestCase
 	 * @var    string  Sample XML.
 	 * @since  12.3
 	 */
-	protected $sampleXml=<<<XML
+	protected $sampleXml = <<<XML
 <?xml version='1.0'?>
 <osm></osm>
 XML;
@@ -82,7 +82,7 @@ XML;
 
 		$key = "app_key";
 		$secret = "app_secret";
-			
+
 		$access_token = array('key' => 'token_key', 'secret' => 'token_secret');
 
 		$this->options = new JRegistry;
@@ -110,7 +110,7 @@ XML;
 		$changeset = '123';
 		$latitude = '2';
 		$longitude = '2';
-		$tags = array("A"=>"a","B"=>"b");
+		$tags = array("A" => "a","B" => "b");
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
@@ -124,7 +124,7 @@ XML;
 		->will($this->returnValue($returnData));
 
 		$this->assertThat(
-				$this->object->createNode($changeset,$latitude,$longitude,$tags),
+				$this->object->createNode($changeset, $latitude, $longitude, $tags),
 				$this->equalTo($this->sampleXml)
 		);
 	}
@@ -142,7 +142,7 @@ XML;
 		$changeset = '123';
 		$latitude = '2';
 		$longitude = '2';
-		$tags = array("A"=>"a","B"=>"b");
+		$tags = array("A" => "a","B" => "b");
 
 		$returnData = new stdClass;
 		$returnData->code = 500;
@@ -155,7 +155,7 @@ XML;
 		->with($path)
 		->will($this->returnValue($returnData));
 
-		$this->object->createNode($changeset,$latitude,$longitude,$tags);
+		$this->object->createNode($changeset, $latitude, $longitude, $tags);
 	}
 
 	/**
@@ -168,26 +168,26 @@ XML;
 	public function testCreateWay()
 	{
 		$changeset = '123';
-		$tags = array("A"=>"a","B"=>"b");
+		$tags = array("A" => "a","B" => "b");
 		$nds = array("a", "b");
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = 'way/create';
-	
+
 		$this->client->expects($this->once())
 		->method('put')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
-				$this->object->createWay($changeset,$tags,$nds),
+				$this->object->createWay($changeset, $tags, $nds),
 				$this->equalTo($this->sampleXml)
 		);
 	}
-	
+
 	/**
 	 * Tests the createWay method - failure
 	 *
@@ -199,7 +199,7 @@ XML;
 	public function testCreateWayFailure()
 	{
 		$changeset = '123';
-		$tags = array("A"=>"a","B"=>"b");
+		$tags = array("A" => "a","B" => "b");
 		$nds = array("a", "b");
 
 		$returnData = new stdClass;
@@ -213,9 +213,9 @@ XML;
 		->with($path)
 		->will($this->returnValue($returnData));
 
-		$this->object->createWay($changeset,$tags,$nds);
+		$this->object->createWay($changeset, $tags, $nds);
 	}
-	
+
 	/**
 	 * Tests the createRelation method
 	 *
@@ -226,8 +226,8 @@ XML;
 	public function testCreateRelation()
 	{
 		$changeset = '123';
-		$tags = array("A"=>"a","B"=>"b");
-		$members = array(array("type"=>"node","role"=>"stop","ref"=>"123"),array("type"=>"way","ref"=>"123"));
+		$tags = array("A" => "a","B" => "b");
+		$members = array(array("type" => "node","role" => "stop","ref" => "123"),array("type" => "way","ref" => "123"));
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
@@ -241,11 +241,11 @@ XML;
 		->will($this->returnValue($returnData));
 
 		$this->assertThat(
-				$this->object->createRelation($changeset,$tags,$members),
+				$this->object->createRelation($changeset, $tags, $members),
 				$this->equalTo($this->sampleXml)
 		);
 	}
-	
+
 	/**
 	 * Tests the createRelation method - failure
 	 *
@@ -257,8 +257,8 @@ XML;
 	public function testCreateRelationFailure()
 	{
 		$changeset = '123';
-		$tags = array("A"=>"a","B"=>"b");
-		$members = array(array("type"=>"node","role"=>"stop","ref"=>"123"),array("type"=>"way","ref"=>"123"));
+		$tags = array("A" => "a","B" => "b");
+		$members = array(array("type" => "node","role" => "stop","ref" => "123"),array("type" => "way","ref" => "123"));
 
 		$returnData = new stdClass;
 		$returnData->code = 500;
@@ -271,7 +271,7 @@ XML;
 		->with($path)
 		->will($this->returnValue($returnData));
 
-		$this->object->createRelation($changeset,$tags,$members);
+		$this->object->createRelation($changeset, $tags, $members);
 	}
 
 	/**
@@ -297,13 +297,13 @@ XML;
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->readElement($element, $id),
 				$this->equalTo($returnData->$element)
 		);
 	}
-	
+
 	/**
 	 * Tests the readElement method - failure
 	 *
@@ -344,24 +344,24 @@ XML;
 		$element = 'node';
 		$id = '123';
 		$xml = "<?xml version='1.0'?><osm><element></element></osm>";
-	
+
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = $element . '/' . $id;
-	
+
 		$this->client->expects($this->once())
 		->method('put')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->updateElement($element, $xml, $id),
 				$this->equalTo($this->sampleXml)
 		);
 	}
-	
+
 	/**
 	 * Tests the updateElement method - failure
 	 *
@@ -389,7 +389,7 @@ XML;
 
 		$this->object->updateElement($element, $xml, $id);
 	}
-	
+
 	/**
 	 * Tests the deleteElement method
 	 *
@@ -409,20 +409,20 @@ XML;
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
-	
+
 		$path = $element . '/' . $id;
-	
+
 		$this->client->expects($this->once())
 		->method('delete')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->deleteElement($element, $id, $version, $changeset, $latitude, $longitude),
 				$this->equalTo($this->sampleXml)
 		);
 	}
-	
+
 	/**
 	 * Tests the deleteElement method - failure
 	 *
@@ -538,7 +538,7 @@ XML;
 		->will($this->returnValue($returnData));
 
 		$this->assertThat(
-				$this->object->versionOfElement($element, $id ,$version),
+				$this->object->versionOfElement($element, $id, $version),
 				$this->equalTo($returnData->$element)
 		);
 	}
@@ -569,7 +569,7 @@ XML;
 		->with($path)
 		->will($this->returnValue($returnData));
 
-		$this->object->versionOfElement($element, $id ,$version);
+		$this->object->versionOfElement($element, $id, $version);
 	}
 
 	/**
@@ -584,25 +584,25 @@ XML;
 		$element = 'nodes';
 		$params = '123,456,789';
 		$single_element = substr($element, 0, strlen($element) - 1);
-	
+
 		$returnData = new stdClass;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
 		$returnData->$single_element = new SimpleXMLElement($this->sampleXml);
-	
+
 		$path = $element . '?' . $element . "=" . $params;
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->multiFetchElements($element, $params),
 				$this->equalTo($returnData->$single_element)
 		);
 	}
-	
+
 	/**
 	 * Tests the multiFetchElements method - failure
 	 *
@@ -621,14 +621,14 @@ XML;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
 		$returnData->$single_element = new SimpleXMLElement($this->sampleXml);
-	
+
 		$path = $element . '?' . $element . "=" . $params;
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->object->multiFetchElements($element, $params);
 	}
 
@@ -648,20 +648,20 @@ XML;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
 		$returnData->$element = new SimpleXMLElement($this->sampleXml);
-	
+
 		$path = $element . '/' . $id . '/relations';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->relationsForElement($element, $id),
 				$this->equalTo($returnData->$element)
 		);
 	}
-	
+
 	/**
 	 * Tests the relationsForElement method - failure
 	 *
@@ -674,19 +674,19 @@ XML;
 	{
 		$element = 'node';
 		$id = '123';
-	
+
 		$returnData = new stdClass;
 		$returnData->code = 500;
 		$returnData->body = $this->errorString;
 		$returnData->$element = new SimpleXMLElement($this->sampleXml);
-	
+
 		$path = $element . '/' . $id . '/relations';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->object->relationsForElement($element, $id);
 	}
 
@@ -705,20 +705,20 @@ XML;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
 		$returnData->way = new SimpleXMLElement($this->sampleXml);
-	
+
 		$path = 'node/' . $id . '/ways';
-	
+
 		$this->client->expects($this->once())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
-	
+
 		$this->assertThat(
 				$this->object->waysForNode($id),
 				$this->equalTo($returnData->way)
 		);
 	}
-	
+
 	/**
 	 * Tests the waysForNode method - failure
 	 *
@@ -762,7 +762,7 @@ XML;
 		$returnData->code = 200;
 		$returnData->body = $this->sampleXml;
 		$returnData->node = new SimpleXMLElement($this->sampleXml);
-	
+
 		$path = $element . '/' . $id . '/full';
 
 		$this->client->expects($this->once())
@@ -834,7 +834,7 @@ XML;
 				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
-	
+
 	/**
 	 * Tests the redaction method - failure
 	 *
