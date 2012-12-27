@@ -112,11 +112,6 @@ abstract class JOpenstreetmapObject
 				break;
 		}
 
-		if (strpos($response->body, 'redirected') !== false)
-		{
-			return $response->headers['Location'];
-		}
-
 		// Validate the response code.
 		if ($response->code != 200)
 		{

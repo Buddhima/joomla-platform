@@ -41,6 +41,12 @@ class JOpenstreetmapOauthTest extends TestCase
 	protected $oauth;
 
 	/**
+	 * @var    string  Sample string.
+	 * @since  12.3
+	 */
+	protected $sampleString = 'Test String';
+
+	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 *
