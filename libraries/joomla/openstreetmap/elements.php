@@ -216,12 +216,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function readElement($element, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		// Set the API base
@@ -246,12 +247,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function updateElement($element, $xml, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		$token = $this->oauth->getToken();
@@ -288,12 +290,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function deleteElement($element, $id, $version, $changeset, $latitude=null, $longitude=null)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		$token = $this->oauth->getToken();
@@ -337,12 +340,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function historyOfElement($element, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		// Set the API base
@@ -367,12 +371,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array    The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function versionOfElement($element, $id ,$version)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		// Set the API base
@@ -396,12 +401,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function multiFetchElements($element, $params)
 	{
 		if ($element != 'nodes' && $element != 'ways' && $element != 'relations')
 		{
-			return;
+			throw new DomainException("Element should be nodes, ways or relations");
 		}
 
 		// Get singular word
@@ -422,18 +428,19 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	/**
 	 * Method to get relations for an Element [node|way|relation]
 	 *
-	 * @param   string  $element  [nodes|ways|relations]
+	 * @param   string  $element  [node|way|relation]
 	 * @param   int     $id       element identifier
 	 * 
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function relationsForElement($element, $id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		// Set the API base
@@ -480,12 +487,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function fullElement($element, $id)
 	{
 		if ($element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a way or a relation");
 		}
 
 		// Set the API base
@@ -511,12 +519,13 @@ class JOpenstreetmapElements extends JOpenstreetmapObject
 	 * @return  array   The xml response
 	 * 
 	 * @since   12.3
+	 * @throws  DomainException
 	 */
 	public function redaction($element, $id, $version, $redaction_id)
 	{
 		if ($element != 'node' && $element != 'way' && $element != 'relation')
 		{
-			return;
+			throw new DomainException("Element should be a node, a way or a relation");
 		}
 
 		$token = $this->oauth->getToken();

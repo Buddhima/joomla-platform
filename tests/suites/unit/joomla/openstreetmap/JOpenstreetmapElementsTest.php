@@ -58,8 +58,8 @@ XML;
 
 	/**
 	 * @var    string  Sample XML error message.
-	 * @since  12.3
-	 */
+	* @since  12.3
+	*/
 	protected $errorString = <<<XML
 <?xml version='1.0'?>
 <osm>ERROR</osm>
@@ -67,12 +67,12 @@ XML;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
+	* This method is called before a test is executed.
+	*
+	* @access protected
+	*
+	* @return void
+	*/
 	protected function setUp()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
@@ -275,15 +275,52 @@ XML;
 	}
 
 	/**
+	 * Provides test data for element type.
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
+	public function seedElement()
+	{
+		// Element type
+		return array(
+				array('node'),
+				array('way'),
+				array('relation')
+		);
+	}
+
+	/**
+	 * Provides test data for element type - faliures
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
+	public function seedElementFailure()
+	{
+		// Element type
+		return array(
+				array('node'),
+				array('way'),
+				array('relation'),
+				array('other')
+		);
+	}
+
+	/**
 	 * Tests the readElement method
+	 *
+	 * @param   string  $element  Element type
 	 *
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testReadElement()
+	public function testReadElement($element)
 	{
-		$element = 'node';
 		$id = '123';
 
 		$returnData = new stdClass;
@@ -307,14 +344,16 @@ XML;
 	/**
 	 * Tests the readElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 *
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testReadElementFailure()
+	public function testReadElementFailure($element)
 	{
-		$element = 'node';
 		$id = '123';
 
 		$returnData = new stdClass;
@@ -324,7 +363,7 @@ XML;
 
 		$path = $element . '/' . $id;
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -335,13 +374,15 @@ XML;
 	/**
 	 * Tests the updateElement method
 	 *
+	 * @param   string  $element  Element type
+	 *
 	 * @return  array
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testUpdateElement()
+	public function testUpdateElement($element)
 	{
-		$element = 'node';
 		$id = '123';
 		$xml = "<?xml version='1.0'?><osm><element></element></osm>";
 
@@ -365,14 +406,16 @@ XML;
 	/**
 	 * Tests the updateElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 *
 	 * @return  array
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testUpdateElementFailure()
+	public function testUpdateElementFailure($element)
 	{
-		$element = 'node';
 		$id = '123';
 		$xml = "<?xml version='1.0'?><osm><element></element></osm>";
 
@@ -382,7 +425,7 @@ XML;
 
 		$path = $element . '/' . $id;
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('put')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -393,13 +436,15 @@ XML;
 	/**
 	 * Tests the deleteElement method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  array
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testDeleteElement()
+	public function testDeleteElement($element)
 	{
-		$element = 'node';
 		$id = '123';
 		$version = '1.0';
 		$changeset = '123';
@@ -426,14 +471,16 @@ XML;
 	/**
 	 * Tests the deleteElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  array
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testDeleteElementFailure()
+	public function testDeleteElementFailure($element)
 	{
-		$element = 'node';
 		$id = '123';
 		$version = '1.0';
 		$changeset = '123';
@@ -446,7 +493,7 @@ XML;
 
 		$path = $element . '/' . $id;
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('delete')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -457,13 +504,15 @@ XML;
 	/**
 	 * Tests the historyOfElement method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testHistoryOfElement()
+	public function testHistoryOfElement($element)
 	{
-		$element = 'node';
 		$id = '123';
 
 		$returnData = new stdClass;
@@ -487,14 +536,16 @@ XML;
 	/**
 	 * Tests the historyOfElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testHistoryOfElementFailure()
+	public function testHistoryOfElementFailure($element)
 	{
-		$element = 'node';
 		$id = '123';
 
 		$returnData = new stdClass;
@@ -504,7 +555,7 @@ XML;
 
 		$path = $element . '/' . $id . '/history';
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -515,13 +566,15 @@ XML;
 	/**
 	 * Tests the versionOfElement method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testVersionOfElement()
+	public function testVersionOfElement($element)
 	{
-		$element = 'node';
 		$id = '123';
 		$version = '1';
 
@@ -546,14 +599,16 @@ XML;
 	/**
 	 * Tests the versionOfElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testVersionOfElementFailure()
+	public function testVersionOfElementFailure($element)
 	{
-		$element = 'node';
 		$id = '123';
 		$version = '1';
 
@@ -564,7 +619,7 @@ XML;
 
 		$path = $element . '/' . $id . '/' . $version;
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -573,15 +628,52 @@ XML;
 	}
 
 	/**
+	 * Provides test data for element type.
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
+	public function seedElements()
+	{
+		// Elements type
+		return array(
+				array('nodes'),
+				array('ways'),
+				array('relations')
+		);
+	}
+
+	/**
+	 * Provides test data for element type - faliures
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
+	public function seedElementsFailure()
+	{
+		// Elements type
+		return array(
+				array('nodes'),
+				array('ways'),
+				array('relations'),
+				array('others')
+		);
+	}
+
+	/**
 	 * Tests the multiFetchElements method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElements
 	 */
-	public function testMultiFetchElements()
+	public function testMultiFetchElements($element)
 	{
-		$element = 'nodes';
 		$params = '123,456,789';
 		$single_element = substr($element, 0, strlen($element) - 1);
 
@@ -606,14 +698,16 @@ XML;
 	/**
 	 * Tests the multiFetchElements method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementsFailure
 	 */
-	public function testMultiFetchElementsFailure()
+	public function testMultiFetchElementsFailure($element)
 	{
-		$element = 'nodes';
 		$params = '123,456,789';
 		$single_element = substr($element, 0, strlen($element) - 1);
 
@@ -624,7 +718,7 @@ XML;
 
 		$path = $element . '?' . $element . "=" . $params;
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -635,13 +729,15 @@ XML;
 	/**
 	 * Tests the relationsForElement method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testRelationsForElement()
+	public function testRelationsForElement($element)
 	{
-		$element = 'node';
 		$id = '123';
 
 		$returnData = new stdClass;
@@ -665,14 +761,16 @@ XML;
 	/**
 	 * Tests the relationsForElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testRelationsForElementFailure()
+	public function testRelationsForElementFailure($element)
 	{
-		$element = 'node';
 		$id = '123';
 
 		$returnData = new stdClass;
@@ -682,7 +780,7 @@ XML;
 
 		$path = $element . '/' . $id . '/relations';
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -747,16 +845,51 @@ XML;
 	}
 
 	/**
+	 * Provides test data for full element type.
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
+	public function seedFullElement()
+	{
+		// Full element type
+		return array(
+				array('way'),
+				array('relation')
+		);
+	}
+
+	/**
+	 * Provides test data for full element type - faliures
+	 *
+	 * @return array
+	 *
+	 * @since 12.3
+	 */
+	public function seedFullElementFailure()
+	{
+		// Full element type
+		return array(
+				array('way'),
+				array('relation'),
+				array('other')
+		);
+	}
+
+	/**
 	 * Tests the fullElement method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedFullElement
 	 */
-	public function testFullElement()
+	public function testFullElement($element)
 	{
 		$id = '123';
-		$element = 'way';
 
 		$returnData = new stdClass;
 		$returnData->code = 200;
@@ -779,15 +912,17 @@ XML;
 	/**
 	 * Tests the fullElement method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedFullElementFailure
 	 */
-	public function testFullElementFailure()
+	public function testFullElementFailure($element)
 	{
 		$id = '123';
-		$element = 'way';
 
 		$returnData = new stdClass;
 		$returnData->code = 500;
@@ -796,7 +931,7 @@ XML;
 
 		$path = $element . '/' . $id . '/full';
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('get')
 		->with($path)
 		->will($this->returnValue($returnData));
@@ -807,14 +942,16 @@ XML;
 	/**
 	 * Tests the redaction method
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
+	 * @dataProvider seedElement
 	 */
-	public function testRedaction()
+	public function testRedaction($element)
 	{
 		$id = '123';
-		$element = 'way';
 		$version = '1';
 		$redaction_id = '1';
 
@@ -838,15 +975,17 @@ XML;
 	/**
 	 * Tests the redaction method - failure
 	 *
+	 * @param   string  $element  Element type
+	 * 
 	 * @return  void
 	 *
 	 * @since   12.3
 	 * @expectedException DomainException
+	 * @dataProvider seedElementFailure
 	 */
-	public function testRedactionFailure()
+	public function testRedactionFailure($element)
 	{
 		$id = '123';
-		$element = 'way';
 		$version = '1';
 		$redaction_id = '1';
 
@@ -856,7 +995,7 @@ XML;
 
 		$path = $element . '/' . $id . '/' . $version . '/redact?redaction=' . $redaction_id;
 
-		$this->client->expects($this->once())
+		$this->client->expects($this->any())
 		->method('put')
 		->with($path)
 		->will($this->returnValue($returnData));
