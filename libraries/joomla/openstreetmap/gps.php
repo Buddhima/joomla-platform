@@ -111,9 +111,7 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 		$path = $this->getOption('api.url') . $base;
 
 		// Send the request.
-		$response = $this->sendRequest($path, 'GET', array('Authorization' => 'Basic ' . base64_encode($username . ':' . $password)));
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path, 'GET', array('Authorization' => 'Basic ' . base64_encode($username . ':' . $password)));
 
 		return $xml_string;
 	}
@@ -140,9 +138,7 @@ class JOpenstreetmapGps extends JOpenstreetmapObject
 		$client = JHttpFactory::getHttp();
 
 		// Send the request.
-		$response = $this->sendRequest($path, 'GET', array('Authorization' => 'Basic ' . base64_encode($username . ':' . $password)));
-
-		$xml_string = simplexml_load_string($response->body);
+		$xml_string = $this->sendRequest($path, 'GET', array('Authorization' => 'Basic ' . base64_encode($username . ':' . $password)));
 
 		return $xml_string;
 	}

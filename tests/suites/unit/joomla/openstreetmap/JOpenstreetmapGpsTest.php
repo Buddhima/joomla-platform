@@ -191,7 +191,7 @@ XML;
 
 		$this->assertThat(
 				$this->object->uploadTrace($file, $description, $tags, $public, $visibility, $username, $password),
-				$this->equalTo($returnData)
+				$this->equalTo(new SimpleXMLElement($this->sampleXml))
 		);
 	}
 

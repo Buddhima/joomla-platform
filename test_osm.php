@@ -81,11 +81,11 @@ class OsmApp extends JApplicationWeb
 // 		$result=$element->createNode($oauth, '14153708', '5.5', '6.7', array("C"=>"Cat","D"=>"Dogs"));
 // 		print_r($result);
 		echo '$$$$<br />';
- 		$result = $changeset -> readChangeset('14153708');
+ 		$result = $changeset -> readChangeset('10');
  		print_r($result);
 		echo '<br />';
 // 		$result=$element->readElement($oauth, 'node', '2050021859');
- 		$result=$element->readElement($oauth, 'node', 123);
+ 		$result=$element->readElement('node', 123);
  		print_r($result);
 		
 		//$result = $changeset ->updateChangeset($oauth, '1',$tags);
