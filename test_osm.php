@@ -20,7 +20,8 @@ class OsmApp extends JApplicationWeb
 	function doExecute(){
 		$key = "8DVVqjUxRiruXsMYZegClYbWODIMoKZxLl8w9pXR";
 		$secret = "HvZkpFOsyq9oD7GEHYASyRgzKasRAMsvQ53Qb483";
-		
+// 		$key = "9o2s3leTWNqLhg4NvBguBR2fT4M8Q7nYSORwRP0W";
+// 		$secret = "ZJrLaPyu3gANBDVH5v2x5Heiw04t4cybquFvNTSb";
 
 		$option = new JRegistry;
 		$option->set('consumer_key', $key);
@@ -33,11 +34,11 @@ class OsmApp extends JApplicationWeb
 		//$access_token = array('key' => '617544537-uMhDHjkCPGbgsb8NASkyWOfQj6wkIGWNjtZOIxDX', 'secret' => 'x9VpWp0tGK7q7lIlTyij7c0kfpRKWEWNJo2daPqHU8');
 		//$oauth->setToken($access_token);
 		
-		$new_token = $oauth->authenticate();
+	//	$new_token = $oauth->authenticate();
 		
 //  		$oauth->setToken($new_token);
 		
-
+		$oauth->authenticate();
  		$osm=new JOpenstreetmap($oauth);
 // 		$osm=new JOpenstreetmap();
 		$changeset= $osm ->changesets;
@@ -76,7 +77,7 @@ class OsmApp extends JApplicationWeb
 				) 
 		);
 		
-		$result = $changeset ->createChangeset($changesets);
+// 		$result = $changeset ->createChangeset($changesets);
 // 		$result = $changeset ->updateChangeset($oauth, '14153877',array("C"=>"Cat","D"=>"Dogs"));
 		//$result = $changeset ->closeChangeset($oauth, '14153877');
 		//$result = $changeset -> readChangeset($oauth, '14153877');
@@ -99,8 +100,8 @@ class OsmApp extends JApplicationWeb
 // 		$result = $changeset ->expandBBoxChangeset($oauth,'1',$node_list);
 // 		print_r('DDDDPPPPP');
 		//print_r($new_token);
-// 		$result =$gps->downloadTraceMetadetails('1370260','bswije','buddhima');
-// 		print_r($result);
+		$result =$gps->downloadTraceMetadetails('1370260','bswije','buddhima');
+		print_r($result);
 
 	}
 }
